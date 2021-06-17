@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-    hello world
+    hello world, it`s student c:
 	</div>
 </template>
 
