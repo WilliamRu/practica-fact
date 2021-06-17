@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-    hello world
+    Hi! It`s my first page. I don`t know what i will write here.
 	</div>
 </template>
 
