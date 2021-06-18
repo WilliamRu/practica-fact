@@ -1,7 +1,10 @@
 <template>
 	<div id="app">
-    hello world
-	</div>
+    <h1>hello world HELLO WORLD</h1>
+    <h2>hello world HELLO WORLD</h2>
+    <h3>hello world HELLO WORLD</h3>
+    <h4>hello world HELLO WORLD</h4>
+  </div>
 </template>
 
 <script>
