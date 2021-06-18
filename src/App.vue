@@ -1,11 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="Export">
     <p>{{ value }}</p>
     <p>{{ exponent }}</p>
   </div>
 </template>
 <script>
-
 export default {
   name: "app",
   data() {
@@ -27,7 +26,15 @@ export default {
     }
   },
 };
+
 </script>
 
 <style lang="scss">
+.Export {
+  color: blueviolet;
+  background-color: black;
+  height: 440px;
+  padding-top: 200px;
+  text-align: center;
+}
 </style>

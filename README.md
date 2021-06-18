@@ -1,4 +1,5 @@
-# фывфывфы
+
+# Wake the **** Up Samurai, We have a city to burn.
 
 # app
 
