@@ -1,4 +1,5 @@
 <template>
+
 	<div id="app">
     <div>
       <p>Экспонента числа {{value}} = {{exp}}</p>
@@ -27,9 +28,9 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
+
 	name: "App",
   data() {
 	  return {
