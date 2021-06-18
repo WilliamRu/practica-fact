@@ -1,5 +1,6 @@
 <template>
-	<div id="app">
+  <div id="app">
+    hello world, it`s student c:
     <h1>hello world HELLO WORLD</h1>
     <h2>hello world HELLO WORLD</h2>
     <h3>hello world HELLO WORLD</h3>
@@ -10,8 +11,8 @@
 <script>
 
 export default {
-	name: "App",
-	components: {},
+  name: "App",
+  components: {},
 };
 </script>
 
