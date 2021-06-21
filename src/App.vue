@@ -25,8 +25,10 @@ export default {
   methods:{
 
   },
+  mounted() {
+	  this.initInterval();
+  },
 };
-
 </script>
 
 <style lang="scss">
