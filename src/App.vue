@@ -1,87 +1,29 @@
 <template>
-
-	<div id="app">
-    <div>
-      <p>Экспонента числа {{value}} = {{exp}}</p>
-    </div>
-    <span v-if="seen">Меня видно</span>
-    <ol>
-      <li v-for="todo in todos">
-        {{todo.text}}
-      </li>
-    </ol>
-    <div>
-      <p>{{message}}</p>
-      <button v-on:click="reverseMessage">Переверни меня</button>
-    </div>
-    <span v-once>Это сообщение никогда не изменится: {{ msg }}</span>
-    <div>
-      <button v-bind:disabled="isButtonDisabled">Кнопка</button>
-    </div>
-    <div id="example">
-      {{ messages }} {{reverseMessages}}
-    </div>
-    <p>Сообщение задом наперёд: <span class="reverseMssgMethods">{{reverseMssgMethods()}}</span> от <span class="MssgMethods">{{Mssg}}</span></p>
-    <div id="demo">{{ fullName }}</div>
-    <div v-bind:class="{ active: isActive }">
-      <p>hi</p>
-    </div>
-  </div>
+	<div id="bot" class="chat-bot">
+    <header class="header-content">
+      <span class="close-bot"></span>
+      <div class="name-bots">Frog-Bot</div>
+    </header>
+    <main class="main-content">jj</main>
+    <footer class="footer-content">jj</footer>
+	</div>
 </template>
 <script>
 export default {
+  name: "bot",
+  data(){
+    return {
 
-	name: "App",
-  data() {
-	  return {
-	    value: 0,
-      seen: true,
-      todos: [
-        {text: 'Изучить js'},
-        {text: 'Изучить vue'}
-      ],
-      message: 'Hello fsf',
-      messages: 'volk',
-      msg: 'ds',
-      isButtonDisabled: 1,
-      Mssg: 'message from methods',
-      firstName: 'Foo',
-      lastName: 'Bar',
-      fullName: 'Иван Иванов',
-      isActive: false
     };
   },
-  created() {
-	  alert(this.value)
+  computed:{
+
+    },
+  mounted() {
+
   },
-  computed: {
-    exp() {
-      return Math.exp(this.value);
-    },
-    reverseMessages() {
-      return this.messages.split('').reverse().join('')
-    },
-    fullName: {
-      get(){
-        return this.firstName + ' ' + this.lastName
-      },
-      set(newValue){
-        let names = newValue.split(' ')
-        this.firstName=names[0]
-        this.lastName = names[names.length-1]
-      }
-    }
-  },
-  methods: {
-    initInterval() {
-      setInterval(() => this.value++, 1000);
-    },
-    reverseMessage() {
-      this.message = this.message.split('').reverse().join('')
-    },
-    reverseMssgMethods() {
-      return this.Mssg.split('').reverse().join('')
-    }
+  methods:{
+
   },
   mounted() {
 	  this.initInterval();
@@ -90,10 +32,39 @@ export default {
 </script>
 
 <style lang="scss">
-.reverseMssgMethods{
-  color: #ef1515;
+.chat-bot{
+  /*background-color: #7c82ca;*/
+  margin:0 auto;
+  background-color: black;
+  height: 500px;
+  width: 450px;
+  box-shadow:
+      0 1px 4px rgba(0, 0, 0, .3),
+      -23px 0 20px -23px rgba(0, 0, 0, .8),
+      23px 0 20px -23px rgba(0, 0, 0, .8),
+      0 0 40px rgba(0, 0, 0, .1) inset;
+
 }
-.MssgMethods{
-  color: #19af19;
+.header-content{
+  background-color: #7c82ca;
+  height: 100px;
+}
+.main-content{
+  background-color: floralwhite;
+  height: 300px;
+}
+.footer-content{
+  background-color: #7c82ca;
+  height: 100px;
+}
+.name-bots{
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 95px;
+  padding-top: 35px;
+}
+.close-bot{
+  display: flex;
 }
 </style>
