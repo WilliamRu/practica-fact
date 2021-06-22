@@ -1,24 +1,17 @@
 <template>
-  <div id="bot" class="chat-bot">
+	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
-      <img class="logo" src="../one.png">
-      <span class="name-bots">Frog-Bot</span>
-      <p class="bio">NO HORNY.</p>
-      <p class="bio">only memes! & math</p>
+      <div class="name-bots">Frog-Bot</div>
     </header>
-    <main class="main-content">
-      <div class="main-content__message-area">
-        <div class="main-content__message-area-item"></div>
-
-
-      </div>
-      <example></example>
-    </main>
+    <main class="main-content">jj</main>
     <footer class="footer-content">
-      <img src="../frog.png" class="frog">
+      <div class="Enter-Window" contenteditable="">
+        <textarea class="input-style" placeholder="Введите сообщение"></textarea>
+        <button class="input-button" type="button"></button>
+      </div>
     </footer>
-  </div>
+	</div>
 </template>
 <script>
 import example from "./components/example.vue"
@@ -31,74 +24,92 @@ export default {
     return {
     };
   },
-  computed:{
-  },
   methods:{
   },
+
+  computed:{
+
+    },
   mounted() {
-    this.initInterval();
-  },
+    document.querySelector('textarea').addEventListener('input', function (e) {
+      e.target.style.height = '1px';
+      e.target.style.height = e.target.scrollHeight + 2 + "px";
+    })
+  }
 };
 </script>
 
 <style lang="scss">
-.chat-bot {
+
+.chat-bot{
   /*background-color: #7c82ca;*/
-  margin: 0 auto;
-  background-color: #fff;
-  height: 700px;
+  margin:0 auto;
+  height: 490px;
   width: 450px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
-  -23px 0 20px -23px rgba(0, 0, 0, .8),
-  23px 0 20px -23px rgba(0, 0, 0, .8),
-  0 0 40px rgba(0, 0, 0, .1) inset;
+  box-shadow:
+      0 1px 4px rgba(0, 0, 0, .3),
+      -23px 0 20px -23px rgba(0, 0, 0, .8),
+      23px 0 20px -23px rgba(0, 0, 0, .8),
+      0 0 40px rgba(0, 0, 0, .1) inset;
+
 }
-.header-content {
+.header-content{
   background-color: #7c82ca;
   height: 100px;
 }
-.logo {
-  margin: 10px;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: aliceblue solid 2px;
-  float: left;
+.main-content{
+  background-color: floralwhite;
+  height: 300px;
 }
-.main-content {
-  //background-color: floralwhite;
-  background: no-repeat url(../back.png);
-  background-size: 450px 500px;
-  height: 500px;
-  &__message-area {
-    overflow-y: auto;
-    width: 100%;
-    max-height: 100%;
-    height: 100%;
-    &-item {
-      width: 100%;
-      height: 30px;
-      background: rgba(0, 0, 0, .1);
-      margin-bottom: 20px;
-    }
-  }
-}
-.footer-content {
+.footer-content{
   background-color: #7c82ca;
-  height: 100px;
+  height: auto;
+  padding-bottom: 20px;
 }
-.name-bots {
+.name-bots{
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
-  margin-left: 25px;
+  padding-left: 95px;
+  padding-top: 35px;
 }
-.bio {
-  color: #ffffff;
-  font-size: 15px;
-  margin-left: 45px;
+.close-bot{
+  display: flex;
 }
-.close-bot {
-  //display: flex;
+
+.input-style{
+  text-decoration: none;
+  resize: none;
+  border-radius: 15px;
+  width: 300px;
+  height: 25px;
+  margin-top: 28px;
+  outline:none;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+.input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
+.input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
+.input-style:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
+.input-style:-ms-input-placeholder            {opacity: 1; transition: opacity 0.3s ease;}
+.input-style:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
+.input-style:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
+.input-style:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
+.input-style:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+.Enter-Window{
+  display: flex;
+  justify-content: center;
+}
+.input-button{
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  border: 0;
+  margin-top: 30px;
+  outline:none;
+  margin-left: 15px;
+  background: url("./assets/отправить.png") no-repeat center;
+  background-size:30px;
 }
 </style>
