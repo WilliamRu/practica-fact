@@ -8,25 +8,7 @@
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
     </header>
-<<<<<<< HEAD
 
-    <main class="main-content">
-      <table class="table-chat">
-        <tr>
-          <td class="Bot-Column"><div class="Bot-Message">Hi</div></td>
-          <td class="User-Column"><div class="User-Message">Coca-Cola</div></td>
-        </tr>
-        <tr class="new-message">
-          <td class="Bot-Column"></td>
-          <td class="User-Column"><div class="User-Message">Coca-Cola</div></td>
-        </tr>
-      </table>
-
-
-    </main>
-
-=======
-    
     <main class="main-content">
       <div class="main-content__message-area">
         <div class="main-content__message-area-item"></div>
@@ -34,12 +16,11 @@
 
       </div>
     </main>
->>>>>>> e179693b601a9cf2638f44b6634810c0adf0a708
+
     <footer class="footer-content">
       <div class="Enter-Window">
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
         <button class="input-button" type="button"></button>
-        <img src="../frog.png" class="footer_logo">
       </div>
     </footer>
 	</div>
@@ -161,6 +142,7 @@ export default {
   width: 300px;
   height: 25px;
   margin-top: 28px;
+  margin-bottom: 15px;
   outline:none;
   padding-left: 15px;
   padding-top: 10px;
@@ -180,18 +162,17 @@ export default {
   justify-content: center;
 }
 .input-button{
-  width: 40px;
-  height: 40px;
-  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
   border: 0;
-  margin-top: 30px;
+  margin-top: 20px;
   outline:none;
   margin-left: 15px;
-  background: url("./assets/отправить.png") no-repeat center;
-  background-size:30px;
-
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
 }
-<<<<<<< HEAD
+
 .table-chat{
   background-color: red;
   width: 100%;
@@ -241,6 +222,4 @@ export default {
   padding: 8px;
 }
 </style>
-=======
-</style>
->>>>>>> e179693b601a9cf2638f44b6634810c0adf0a708
+
