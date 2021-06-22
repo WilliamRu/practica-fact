@@ -20,6 +20,9 @@
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Зашибок</div>
         </div>
+        <div class="main-content__message-area-item message-human">
+          <div class="main-content__message-area-message">Четко!</div>
+        </div>
       </div>
     </main>
 
@@ -62,6 +65,9 @@ export default {
 </script>
 
 <style lang="scss">
+html{
+  font-family: system-ui;
+}
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -90,7 +96,8 @@ export default {
 
 .bio {
   color: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
+  margin-top: -0.1px;
   margin-left: 45px;
 }
 
@@ -121,7 +128,8 @@ export default {
       right:0;
       }
       .message-human{
-        background-image: radial-gradient(circle, rgba(12, 90, 186, 0.5), rgba(56,0,54,0.5));
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
         margin-left: 195px;
         border-radius: 30px;
         padding: 0.5rem 0.75rem;
@@ -130,13 +138,14 @@ export default {
         box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
       }
       .message-bot{
-        background: radial-gradient(circle, rgba(93, 26, 120, 0.7), rgba(65, 75, 80, 0.7));
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
         border-radius: 30px;
         margin-left: 5px;
         padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       }
     }
   }
@@ -157,7 +166,6 @@ export default {
   font-size: 25px;
   font-weight: bold;
   padding-left: 95px;
-  padding-top: 35px;
 }
 
 .close-bot{
