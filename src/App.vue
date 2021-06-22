@@ -8,6 +8,24 @@
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
     </header>
+<<<<<<< HEAD
+
+    <main class="main-content">
+      <table class="table-chat">
+        <tr>
+          <td class="Bot-Column"><div class="Bot-Message">Hi</div></td>
+          <td class="User-Column"><div class="User-Message">Coca-Cola</div></td>
+        </tr>
+        <tr class="new-message">
+          <td class="Bot-Column"></td>
+          <td class="User-Column"><div class="User-Message">Coca-Cola</div></td>
+        </tr>
+      </table>
+
+
+    </main>
+
+=======
     
     <main class="main-content">
       <div class="main-content__message-area">
@@ -16,8 +34,9 @@
 
       </div>
     </main>
+>>>>>>> e179693b601a9cf2638f44b6634810c0adf0a708
     <footer class="footer-content">
-      <div class="Enter-Window" contenteditable="">
+      <div class="Enter-Window">
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
         <button class="input-button" type="button"></button>
         <img src="../frog.png" class="footer_logo">
@@ -172,4 +191,56 @@ export default {
   background-size:30px;
 
 }
+<<<<<<< HEAD
+.table-chat{
+  background-color: red;
+  width: 100%;
+  height: 100%;
+}
+.Bot-Column{
+  width: 50%;
+  height: 20%;
+}
+.User-Column{
+  width: 50%;
+
+}
+.new-message{
+  height: 10px;
+}
+
+
+.Bot-Message{
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(45deg, #11ff00, #00c84d);
+  font-weight: bold;
+  vertical-align: center;
+  color: #000000;
+  width: 75%;
+  height: 10%;
+  max-height: 100%;
+  margin: -60px 20px;
+  padding: 8px;
+  border-radius: 40px;
+  box-shadow: 0 3px 3px #575555 inset;
+}
+.User-Message{
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(45deg, #00b2ff, #0047c7);
+  box-shadow: 0 3px 3px #575555 inset;
+  text-align: center;
+  border-radius: 40px;
+  font-weight: bold;
+  vertical-align: center;
+  width: 75%;
+  height: 10%;
+  max-height: 100%;
+  margin: -20px 10px;
+  padding: 8px;
+}
 </style>
+=======
+</style>
+>>>>>>> e179693b601a9cf2638f44b6634810c0adf0a708
