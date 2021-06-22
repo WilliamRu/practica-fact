@@ -2,13 +2,23 @@
 	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
-      <div class="name-bots">Frog-Bot</div>
+      <img class="logo" src="../one.png">
+      <span class="name-bots">Frog-Bot</span>
+      <p class="bio">NO HORNY.</p>
+      <p class="bio">only memes! & math</p>
     </header>
-    <main class="main-content">jj</main>
+    <main class="main-content">
+      <div class="main-content__message-area">
+        <div class="main-content__message-area-item"></div>
+
+
+      </div>
+    </main>
     <footer class="footer-content">
       <div class="Enter-Window" contenteditable="">
         <textarea class="input-style" placeholder="Введите сообщение"></textarea>
         <button class="input-button" type="button"></button>
+        <img src="../frog.png" class="frog">
       </div>
     </footer>
 	</div>
@@ -41,6 +51,7 @@ export default {
 
 <style lang="scss">
 
+
 .chat-bot{
   /*background-color: #7c82ca;*/
   margin:0 auto;
@@ -57,9 +68,33 @@ export default {
   background-color: #7c82ca;
   height: 100px;
 }
+
+.logo {
+  margin: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: aliceblue solid 2px;
+  float: left;
+}
 .main-content{
-  background-color: floralwhite;
+  background: no-repeat url(../back.png);
+  background-size: 450px 500px;
+  //background-color: floralwhite;
   height: 300px;
+  &__message-area {
+    overflow-y: auto;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+
+    &-item {
+      width: 100%;
+      height: 30px;
+      background: rgba(0, 0, 0, .1);
+      margin-bottom: 20px;
+    }
+  }
 }
 .footer-content{
   background-color: #7c82ca;
@@ -101,15 +136,21 @@ export default {
   display: flex;
   justify-content: center;
 }
-.input-button{
+.input-button {
   width: 40px;
   height: 40px;
   border-radius: 30px;
   border: 0;
   margin-top: 30px;
-  outline:none;
+  outline: none;
   margin-left: 15px;
   background: url("./assets/отправить.png") no-repeat center;
-  background-size:30px;
+  background-size: 30px;
 }
+  .bio {
+    color: #ffffff;
+    font-size: 15px;
+    margin-left: 45px;
+  }
+
 </style>
