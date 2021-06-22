@@ -1,98 +1,104 @@
 <template>
-	<div id="app">
-    <div>
-      <p>Экспонента числа {{value}} = {{exp}}</p>
-    </div>
-    <span v-if="seen">Меня видно</span>
-    <ol>
-      <li v-for="todo in todos">
-        {{todo.text}}
-      </li>
-    </ol>
-    <div>
-      <p>{{message}}</p>
-      <button v-on:click="reverseMessage">Переверни меня</button>
-    </div>
-    <span v-once>Это сообщение никогда не изменится: {{ msg }}</span>
-    <div>
-      <button v-bind:disabled="isButtonDisabled">Кнопка</button>
-    </div>
-    <div id="example">
-      {{ messages }} {{reverseMessages}}
-    </div>
-    <p>Сообщение задом наперёд: <span class="reverseMssgMethods">{{reverseMssgMethods()}}</span> от <span class="MssgMethods">{{Mssg}}</span></p>
-    <div id="demo">{{ fullName }}</div>
-    <div v-bind:class="{ active: isActive }">
-      <p>hi</p>
-    </div>
+  <div id="bot" class="chat-bot">
+    <header class="header-content">
+      <span class="close-bot"></span>
+      <img class="logo" src="../one.png">
+      <span class="name-bots">Frog-Bot</span>
+      <p class="bio">NO HORNY.</p>
+      <p class="bio">only memes! & math</p>
+    </header>
+    <main class="main-content">
+      <div class="main-content__message-area">
+        <div class="main-content__message-area-item"></div>
+
+
+      </div>
+      <example></example>
+    </main>
+    <footer class="footer-content">
+      <img src="../frog.png" class="frog">
+    </footer>
   </div>
 </template>
-
 <script>
+import example from "./components/example.vue"
 export default {
-	name: "App",
-  data() {
-	  return {
-	    value: 0,
-      seen: true,
-      todos: [
-        {text: 'Изучить js'},
-        {text: 'Изучить vue'}
-      ],
-      message: 'Hello fsf',
-      messages: 'volk',
-      msg: 'ds',
-      isButtonDisabled: 1,
-      Mssg: 'message from methods',
-      firstName: 'Foo',
-      lastName: 'Bar',
-      fullName: 'Иван Иванов',
-      isActive: false
+  name: "bot",
+  components: {
+    example
+  },
+  data(){
+    return {
     };
   },
-  created() {
-	  alert(this.value)
+  computed:{
   },
-  computed: {
-    exp() {
-      return Math.exp(this.value);
-    },
-    reverseMessages() {
-      return this.messages.split('').reverse().join('')
-    },
-    fullName: {
-      get(){
-        return this.firstName + ' ' + this.lastName
-      },
-      set(newValue){
-        let names = newValue.split(' ')
-        this.firstName=names[0]
-        this.lastName = names[names.length-1]
-      }
-    }
-  },
-  methods: {
-    initInterval() {
-      setInterval(() => this.value++, 1000);
-    },
-    reverseMessage() {
-      this.message = this.message.split('').reverse().join('')
-    },
-    reverseMssgMethods() {
-      return this.Mssg.split('').reverse().join('')
-    }
+  methods:{
   },
   mounted() {
-	  this.initInterval();
+    this.initInterval();
   },
 };
 </script>
 
 <style lang="scss">
-.reverseMssgMethods{
-  color: #ef1515;
+.chat-bot {
+  /*background-color: #7c82ca;*/
+  margin: 0 auto;
+  background-color: #fff;
+  height: 700px;
+  width: 450px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
+  -23px 0 20px -23px rgba(0, 0, 0, .8),
+  23px 0 20px -23px rgba(0, 0, 0, .8),
+  0 0 40px rgba(0, 0, 0, .1) inset;
 }
-.MssgMethods{
-  color: #19af19;
+.header-content {
+  background-color: #7c82ca;
+  height: 100px;
+}
+.logo {
+  margin: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: aliceblue solid 2px;
+  float: left;
+}
+.main-content {
+  //background-color: floralwhite;
+  background: no-repeat url(../back.png);
+  background-size: 450px 500px;
+  height: 500px;
+  &__message-area {
+    overflow-y: auto;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    &-item {
+      width: 100%;
+      height: 30px;
+      background: rgba(0, 0, 0, .1);
+      margin-bottom: 20px;
+    }
+  }
+}
+.footer-content {
+  background-color: #7c82ca;
+  height: 100px;
+}
+.name-bots {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bold;
+  margin-left: 25px;
+}
+.bio {
+  color: #ffffff;
+  font-size: 15px;
+  margin-left: 45px;
+}
+.close-bot {
+  //display: flex;
 }
 </style>
