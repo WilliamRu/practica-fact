@@ -3,15 +3,30 @@
 	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
-      <div class="name-bots">Frog-Bot</div>
+      <img class="logo" src="../one.png" alt="Логотип">
+      <span class="name-bots">Frog-Bot</span>
+      <p class="bio">NO HORNY.</p>
+      <p class="bio">only memes! & math</p>
     </header>
-    <main class="main-content">jj</main>
-    <footer class="footer-content">
-      <div class="Enter-Window" тcontenteditable="">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
-       <add-button></add-button>
+
+    <main class="main-content">
+      <div class="main-content__message-area">
+        <div class="main-content__message-area-item message-bot">
+          <div class="main-content__message-area-message">Привет!</div>
+        </div>
+        <div class="main-content__message-area-item message-human">
+            <div class="main-content__message-area-message">Как дела?</div>
+        </div>
+        <div class="main-content__message-area-item message-bot">
+          <div class="main-content__message-area-message">Зашибок</div>
+        </div>
       </div>
-      <button type="submit" @click="userMemes">memes</button>
+    </main>
+
+    <footer class="footer-content">
+      <div class="Enter-Window">
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
+      </div>
     </footer>
 	</div>
 </template>
@@ -54,31 +69,98 @@ export default {
 
 <style lang="scss">
 
-.chat-bot{
-  /*background-color: #7c82ca;*/
-  margin:0 auto;
-  height: 490px;
-  width: 450px;
-  box-shadow:
-      0 1px 4px rgba(0, 0, 0, .3),
-      -23px 0 20px -23px rgba(0, 0, 0, .8),
-      23px 0 20px -23px rgba(0, 0, 0, .8),
-      0 0 40px rgba(0, 0, 0, .1) inset;
 
+
+.chat-bot {
+  /*background-color: #7c82ca;*/
+  margin: 0 auto;
+  background-color: #fff;
+  height: 700px;
+  width: 450px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
+  -23px 0 20px -23px rgba(0, 0, 0, .8),
+  23px 0 20px -23px rgba(0, 0, 0, .8),
+  0 0 40px rgba(0, 0, 0, .1) inset;
 }
+
 .header-content{
   background-color: #7c82ca;
   height: 100px;
 }
-.main-content{
-  background-color: floralwhite;
-  height: 300px;
+
+.logo {
+  margin: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: aliceblue solid 2px;
+  float: left;
 }
+
+.bio {
+  color: #ffffff;
+  font-size: 15px;
+  margin-left: 45px;
+}
+
+.main-content {
+  background: no-repeat url(../back.png);
+  background-size: 450px 500px;
+  height: 500px;
+
+  &__message-area {
+    display: flex;
+    flex: 1 0;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    &-item {
+      display: flex;
+      justify-content: center;
+      height: auto;
+      font-weight: bold;
+      width: 50%;
+      padding: 0.5rem 0.75rem;
+      flex-shrink: 0;
+      margin-bottom: 8px;
+      vertical-align: center;
+      text-align: center;
+      right:0;
+      }
+      .message-human{
+        background-image: radial-gradient(circle, rgba(12, 90, 186, 0.5), rgba(56,0,54,0.5));
+        margin-left: 195px;
+        border-radius: 30px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      }
+      .message-bot{
+        background: radial-gradient(circle, rgba(93, 26, 120, 0.7), rgba(65, 75, 80, 0.7));
+        border-radius: 30px;
+        margin-left: 5px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      }
+    }
+  }
+.main-content__message-area-message{
+  height: auto;
+  width: 90%;
+  word-break: break-all;
+}
+
 .footer-content{
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
 }
+
 .name-bots{
   color: #ffffff;
   font-size: 25px;
@@ -86,10 +168,19 @@ export default {
   padding-left: 95px;
   padding-top: 35px;
 }
+
 .close-bot{
   display: flex;
 }
 
+.footer_logo{
+  float: right;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-right: 10px;}
+  
 .input-style{
   text-decoration: none;
   resize: none;
@@ -97,6 +188,7 @@ export default {
   width: 300px;
   height: 25px;
   margin-top: 28px;
+  margin-bottom: 15px;
   outline:none;
   padding-left: 15px;
   padding-top: 10px;
@@ -116,14 +208,16 @@ export default {
   justify-content: center;
 }
 .input-button{
-  width: 40px;
-  height: 40px;
-  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
   border: 0;
-  margin-top: 30px;
+  margin-top: 20px;
   outline:none;
   margin-left: 15px;
-  background: url("./assets/отправить.png") no-repeat center;
-  background-size:30px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
 }
+
 </style>
+
