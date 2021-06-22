@@ -15,7 +15,7 @@
       </div>
     </main>
     <footer class="footer-content">
-      <img src="../frog.png" class="frog">
+      <img src="../frog.png" class="footer_logo">
     </footer>
   </div>
 </template>
@@ -102,5 +102,14 @@ export default {
 
 .close-bot {
   //display: flex;
+}
+
+.footer_logo{
+  float: right;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-right: 10px;
 }
 </style>
