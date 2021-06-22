@@ -7,7 +7,7 @@
     <main class="main-content">jj</main>
     <footer class="footer-content">
       <div class="Enter-Window" contenteditable="">
-        <textarea class="input-style" placeholder="Введите сообщение"></textarea>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
         <button class="input-button" type="button"></button>
       </div>
     </footer>
@@ -16,27 +16,31 @@
 <script>
 export default {
   name: "bot",
-  data(){
+  data() {
     return {
 
     };
   },
-  computed:{
+  computed: {
 
-    },
+  },
+
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
-      e.target.style.height = '1px';
-      e.target.style.height = e.target.scrollHeight + 2 + "px";
+      if(e.target.style.height<=100 || e.target.value.length<=100) {
+        e.target.style.height = '1px';
+        e.target.style.height = e.target.scrollHeight + 30 + "px";
+      }
+      if(e.target.value.length===0){
+        e.target.style.height = '25px';
+      }
     })
   },
-  methods:{
+  methods: {
 
   },
-  mounted() {
-	  this.initInterval();
-  },
-};
+}
+
 </script>
 
 <style lang="scss">
@@ -87,6 +91,7 @@ export default {
   padding-left: 15px;
   padding-top: 10px;
   padding-right: 10px;
+  overflow: auto;
 }
 .input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 .input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
