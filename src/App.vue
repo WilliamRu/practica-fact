@@ -3,7 +3,7 @@
 	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
-      <img class="logo" src="../one.png">
+      <img class="logo" src="../one.png" alt="Логотип">
       <span class="name-bots">Frog-Bot</span>
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
@@ -11,9 +11,15 @@
 
     <main class="main-content">
       <div class="main-content__message-area">
-        <div class="main-content__message-area-item"></div>
-
-
+        <div class="main-content__message-area-item message-bot">
+          <div class="main-content__message-area-message">Привет!</div>
+        </div>
+        <div class="main-content__message-area-item message-human">
+            <div class="main-content__message-area-message">Как дела?</div>
+        </div>
+        <div class="main-content__message-area-item message-bot">
+          <div class="main-content__message-area-message">Зашибок</div>
+        </div>
       </div>
     </main>
 
@@ -89,24 +95,55 @@ export default {
 }
 
 .main-content {
-  //background-color: floralwhite;
   background: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
 
   &__message-area {
+    display: flex;
+    flex: 1 0;
+    flex-direction: column;
     overflow-y: auto;
     width: 100%;
     max-height: 100%;
     height: 100%;
-
     &-item {
-      width: 100%;
-      height: 30px;
-      background: rgba(0, 0, 0, .1);
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      height: auto;
+      font-weight: bold;
+      width: 50%;
+      padding: 0.5rem 0.75rem;
+      flex-shrink: 0;
+      margin-bottom: 8px;
+      vertical-align: center;
+      text-align: center;
+      right:0;
+      }
+      .message-human{
+        background-image: radial-gradient(circle, rgba(12, 90, 186, 0.5), rgba(56,0,54,0.5));
+        margin-left: 195px;
+        border-radius: 30px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      }
+      .message-bot{
+        background: radial-gradient(circle, rgba(93, 26, 120, 0.7), rgba(65, 75, 80, 0.7));
+        border-radius: 30px;
+        margin-left: 5px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      }
     }
   }
+.main-content__message-area-message{
+  height: auto;
+  width: 90%;
+  word-break: break-all;
 }
 
 .footer-content{
@@ -173,53 +210,5 @@ export default {
   background-size: cover;
 }
 
-.table-chat{
-  background-color: red;
-  width: 100%;
-  height: 100%;
-}
-.Bot-Column{
-  width: 50%;
-  height: 20%;
-}
-.User-Column{
-  width: 50%;
-
-}
-.new-message{
-  height: 10px;
-}
-
-
-.Bot-Message{
-  display: flex;
-  justify-content: center;
-  background: linear-gradient(45deg, #11ff00, #00c84d);
-  font-weight: bold;
-  vertical-align: center;
-  color: #000000;
-  width: 75%;
-  height: 10%;
-  max-height: 100%;
-  margin: -60px 20px;
-  padding: 8px;
-  border-radius: 40px;
-  box-shadow: 0 3px 3px #575555 inset;
-}
-.User-Message{
-  display: flex;
-  justify-content: center;
-  background: linear-gradient(45deg, #00b2ff, #0047c7);
-  box-shadow: 0 3px 3px #575555 inset;
-  text-align: center;
-  border-radius: 40px;
-  font-weight: bold;
-  vertical-align: center;
-  width: 75%;
-  height: 10%;
-  max-height: 100%;
-  margin: -20px 10px;
-  padding: 8px;
-}
 </style>
 
