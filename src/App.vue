@@ -16,9 +16,9 @@
     </main>
     <footer class="footer-content">
       <div class="Enter-Window" contenteditable="">
-        <textarea class="input-style" placeholder="Введите сообщение"></textarea>
-        <button class="input-button" type="button"></button>
-        <img src="../frog.png" class="frog">
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
+        <button class="input-button" type="button" @click="submit"></button>
+        <!--<img src="../frog.png" class="frog">-->
       </div>
     </footer>
 	</div>
@@ -35,6 +35,9 @@ export default {
     };
   },
   methods:{
+    submit() {
+
+    }
   },
 
   computed:{
@@ -42,10 +45,15 @@ export default {
     },
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
-      e.target.style.height = '1px';
-      e.target.style.height = e.target.scrollHeight + 2 + "px";
+      if(e.target.style.height<=100 || e.target.value.length<=100) {
+        e.target.style.height = '1px';
+        e.target.style.height = e.target.scrollHeight + 30 + "px";
+      }
+      if(e.target.value.length===0){
+        e.target.style.height = '25px';
+      }
     })
-  }
+  },
 };
 </script>
 
@@ -123,6 +131,7 @@ export default {
   padding-left: 15px;
   padding-top: 10px;
   padding-right: 10px;
+  overflow: auto;
 }
 .input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 .input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
@@ -146,6 +155,9 @@ export default {
   margin-left: 15px;
   background: url("./assets/отправить.png") no-repeat center;
   background-size: 30px;
+}
+.input-button:hover{
+  cursor: pointer;
 }
   .bio {
     color: #ffffff;
