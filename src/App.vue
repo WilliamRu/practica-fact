@@ -9,40 +9,73 @@
     </header>
     <main class="main-content">
       <div class="main-content__message-area">
-        <div class="main-content__message-area-item"></div>
+        <div class="main-content__message-area-item" v-for="(message, index) in messages">
+<!--          {{sum(1,2)}}-->
+<!--          {{minus(1,2)}}-->
+<!--          {{multiple(1,2)}}-->
+<!--          {{division(4,2)}}-->
+
+            <p>{{ message }}</p>
+          <p>{{ hello() }}</p>
+
+        </div>
 
 
       </div>
     </main>
     <footer class="footer-content">
-      <div class="Enter-Window" contenteditable="">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
-        <button class="input-button" type="button" @click="submit"></button>
+      <div class="Enter-Window">
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <input class="input-button" type="button" @click="messages.push(userMessage)"></input>
         <!--<img src="../frog.png" class="frog">-->
       </div>
+      <button >/help</button>
     </footer>
 	</div>
 </template>
 <script>
+
 import example from "./components/example.vue"
 export default {
   name: "bot",
+
   components: {
     example
   },
   data(){
+
     return {
+      userMessage: '',
+      messages: []
+
     };
   },
-  methods:{
-    submit() {
 
+  methods:{
+    sum(a,b) {
+      return a+b;
+    },
+    minus(a,b){
+      return a-b;
+    },
+    multiple(a,b){
+      return a*b;
+    },
+    division(a,b) {
+      return a / b;
+    },
+    hello() {
+      if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
+      else {return alert('В массиве dataFull что-то есть');}
     }
+
+
   },
 
-  computed:{
+  computed: {
 
-    },
+  },
+
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if(e.target.style.height<=100 || e.target.value.length<=100) {
@@ -53,8 +86,11 @@ export default {
         e.target.style.height = '25px';
       }
     })
+
   },
 };
+
+
 </script>
 
 <style lang="scss">
