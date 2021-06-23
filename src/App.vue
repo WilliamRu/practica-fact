@@ -1,5 +1,6 @@
 <template>
 	<div id="bot" class="chat-bot">
+
     <header class="header-content">
       <span class="close-bot"></span>
       <img class="logo" src="../one.png" alt="Логотип">
@@ -10,23 +11,12 @@
 
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Привет!</div>
-        </div>
 
-        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botCommandsMessage">
-          <div class="main-content__message-area-message">{{ commandsBot }}</div>
-        </div>
-        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botAutoMessage">
-          <div class="main-content__message-area-message">{{ emptyUserMessage }}</div>
-        </div>
-
-        <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
-          <!--          {{summa(1,2)}}-->
-          <!--          {{minus(1,2)}}-->
-          <!--          {{multiple(1,2)}}-->
-          <!--          {{division(4,2)}}-->
-          <div class="main-content__message-area-message">{{ message }}</div>
+        <div
+            class="main-content__message-area-item"
+            v-for="(item, index) in messages" :key="index"
+            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
+          <div class="main-content__message-area-message" v-text="item.message"/>
 
         </div>
       </div>
@@ -34,12 +24,12 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
-        <button class="input-button" type="button" @click="addMessages"></button>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-      <button @click="addCommandsBot">/help</button>
+      <button @click="addMessages(commandsBot, 'bot')">/help</button>
     </footer>
+
 	</div>
 </template>
 
@@ -53,7 +43,6 @@ export default {
     example
   },
   data(){
-
     return {
       userMessage: '',
       messages: [],
@@ -81,17 +70,17 @@ export default {
     //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
     //   else {return alert('В массиве dataFull что-то есть');}
     // }
-    addCommandsBot() {
-      this.botCommandsMessage.push(this.commandsBot);
-    },
-    addMessages() {
-      if (this.userMessage=='') {
-        this.botAutoMessage.push(this.emptyUserMessage);
-      }else{
-        this.messages.push(this.userMessage);
+    
+    addMessages(message, type) {
+      if (!!message) {
+        this.messages.push({message, type});
+        this.clearMessageArea();
       }
+    },
+    
+    clearMessageArea() {
+      this.userMessage = ''
     }
-
   },
 
   computed: {
@@ -99,15 +88,16 @@ export default {
   },
 
   mounted() {
+    this.addMessages('Привет!', 'bot')
     document.querySelector('textarea').addEventListener('input', function (e) {
-      if(e.target.style.height<=100 || e.target.value.length<=100) {
+      if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 30 + "px";
       }
-      if(e.target.value.length===0){
+      if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
-    })
+    });
   },
 }
 
@@ -293,7 +283,7 @@ html{
   margin-top: 15px;
   margin-right: 10px;
 }
-  
+
 .input-style{
   text-decoration: none;
   resize: none;
@@ -308,6 +298,7 @@ html{
   padding-right: 10px;
   overflow: auto;
 }
+
 .input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 .input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
 .input-style:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
@@ -316,10 +307,12 @@ html{
 .input-style:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+
 .Enter-Window{
   display: flex;
   justify-content: center;
 }
+
 .input-button{
   width: 50px;
   height: 50px;
@@ -333,9 +326,20 @@ html{
 }
 
 .input-button:hover{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #5e5c5c;
+  margin-top: 20px;
+  outline:none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+}
+
+.input-button:hover{
   cursor: pointer;
 }
 
 
 </style>
-
