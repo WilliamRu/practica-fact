@@ -79,7 +79,7 @@ export default {
     },
     
     clearMessageArea() {
-      this.emptyUserMessage = '';
+      this.userMessage = ''
     },
 
 
