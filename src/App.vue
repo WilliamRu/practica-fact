@@ -63,9 +63,8 @@ export default {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
-      if(message == 'Привет'){
-        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
-        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      if(message === 'Привет'){
+        this.addMessages(this.blockBot, 'bot');
       }
     },
     
