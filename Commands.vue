@@ -25,16 +25,16 @@ export default {
   },
   computed: {
     sum() {
-      return Sum=(this.value +this.value1);
+      return Sum=this.value +this.value1;
     },
-    Minus() {
-      return Minus=(this.value -this.value1);
+    minus() {
+      return Minus=this.value -this.value1;
     },
-    Mul() {
-      return Math.imul(this.value;this.value1);
+    mul() {
+      return Math.imul(this.value,this.value1);
     },
-    Division() {
-      return Division=(this.value /this.value1);
+    division() {
+      return Division=this.value /this.value1;
     }
   },
 }

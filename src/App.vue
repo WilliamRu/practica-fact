@@ -92,6 +92,10 @@ export default {
       }
     })
   },
+
+  methods: {
+    
+  },
 }
 
 </script>
@@ -250,7 +254,9 @@ html{
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
+
 .input-button:hover{
   cursor: pointer;
 }
+
 </style>
