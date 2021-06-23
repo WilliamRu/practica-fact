@@ -11,17 +11,6 @@
     </header>
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-<<<<<<< HEAD
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Привет!</div>
-          <img :src="" alt="">
-        </div>
-        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
-          <div class="main-content__message-area-message">{{ commandsBot }}</div>
-        </div>
-=======
->>>>>>> d6eccb80cd74d5354fe4ff887bb701d4a254c0ae
-
         <div
             class="main-content__message-area-item"
             v-for="(item, index) in messages" :key="index"
@@ -76,6 +65,7 @@ export default {
       userMessage: '',
       messages: [],
 <<<<<<< HEAD
+<<<<<<< HEAD
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       imgMemes: [
@@ -89,9 +79,14 @@ export default {
   methods:{
     summa(a,b) {
 =======
+=======
+      botMessage: [],
+>>>>>>> 8c2c83e19cc22c2da09e5a2ec653d2b5cc1ef848
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
+<<<<<<< HEAD
 
   methods: {
     /*summa(a,b) {
@@ -125,14 +120,21 @@ export default {
         alert('Приветттттттт')
 =======
 
+=======
+  methods:{
+>>>>>>> 8c2c83e19cc22c2da09e5a2ec653d2b5cc1ef848
     addMessages(message, type) {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
 >>>>>>> d6eccb80cd74d5354fe4ff887bb701d4a254c0ae
       }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      }
     },
-    
+
     clearMessageArea() {
       this.userMessage = ''
     }
@@ -148,8 +150,11 @@ export default {
   computed: {},
 
   mounted() {
+<<<<<<< HEAD
     this.addMessages('Привет!', 'bot')
 
+=======
+>>>>>>> 8c2c83e19cc22c2da09e5a2ec653d2b5cc1ef848
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
@@ -223,6 +228,7 @@ html {
     flex: 1 0;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     max-height: 100%;
     height: 100%;
@@ -239,6 +245,7 @@ html {
       vertical-align: center;
       text-align: center;
       right:0;
+
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -266,13 +273,7 @@ html {
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-break: break-all;
-}
-
-.main-content__message-area-message {
-  height: auto;
-  width: 90%;
-  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .footer-content {
@@ -418,7 +419,18 @@ html {
   display: flex;
   justify-content: center;
 }
-
+.function_button {
+  width: 70px;
+  background: #7c82ca;
+  color: white;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+}
+.function_button:hover{
+  cursor: pointer;
+}
 .input-button{
   width: 50px;
   height: 50px;
@@ -429,31 +441,9 @@ html {
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
+  cursor: pointer;
 }
-
-.function_button {
-  width: 70px;
-  background: #7c82ca;
-  color: white;
-  margin-left: 30px;
-  margin-bottom: 5px;
-  border-radius: 30px;
-  border: aliceblue solid 2px;
-
   .input-button:hover {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
     border: 1px solid #5e5c5c;
-    margin-top: 20px;
-    outline: none;
-    margin-left: 15px;
-    background: url("../frog.png") no-repeat center;
-    background-size: cover;
   }
-
-  .input-button:hover {
-    cursor: pointer;
-  }
-}
 </style>
