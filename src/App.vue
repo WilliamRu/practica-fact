@@ -58,7 +58,7 @@ export default {
     })
   },
   methods: {
-
+    
   },
 }
 
@@ -217,6 +217,5 @@ html{
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
-
 </style>
 
