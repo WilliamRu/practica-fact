@@ -41,23 +41,14 @@
 
 <script>
 
-import example from "./components/example.vue"
-
 export default {
   name: "bot",
-
-  components: {
-    example
-  },
-
   data(){
-
     return {
       userMessage: '',
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
@@ -71,21 +62,13 @@ export default {
       if(message === 'Привет'){
         this.addMessages(this.blockBot, 'bot');
       }
-      if(message == 'Привет'){
-        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
-        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
-      }
     },
-    
     clearMessageArea() {
-      this.emptyUserMessage = '';
+      this.userMessage = '';
     },
-
-
   },
 
   computed: {},
-
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
@@ -99,7 +82,6 @@ export default {
     });
   },
 }
-
 </script>
 
 <style lang="scss">
@@ -216,21 +198,6 @@ html {
 .close-bot {
   display: flex;
 }
-
-.input-style {
-  text-decoration: none;
-  resize: none;
-  border-radius: 15px;
-  width: 300px;
-  height: 25px;
-  margin-top: 28px;
-  outline: none;
-  padding-left: 15px;
-  padding-top: 10px;
-  padding-right: 10px;
-  overflow: auto;
-}
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -343,26 +310,6 @@ html {
   display: flex;
   justify-content: center;
 }
-
-
-
-.input-button{
-
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 30px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
-}
-
-
-
-
-
 .function_button {
   width: 70px;
   background: #7c82ca;
@@ -372,12 +319,10 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
-
 .function_button:hover{
   cursor: pointer;
 }
 .input-button{
-
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -389,9 +334,7 @@ html {
   background-size: cover;
   cursor: pointer;
 }
-
   .input-button:hover {
     border: 1px solid #5e5c5c;
   }
-
 </style>
