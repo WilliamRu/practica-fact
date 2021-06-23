@@ -21,17 +21,17 @@
 
         </div>
       </div>
-      <button class="function_button help">/help</button>
+      <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
       <button class="function_button meme">/meme</button>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
 
-      <button @click="addMessages(commandsBot, 'bot')">/help</button>
+
     </footer>
 
 	</div>
@@ -57,39 +57,29 @@ export default {
       botCommandsMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       botAutoMessage: [],
-      emptyUserMessage: 'Лягушонку не нравится тот факт, что вы ему отправляете пустые сообщения, он обиделся.'
+      emptyUserMessage: 'Лягушонку не нравится тот факт, что вы ему отправляете пустые сообщения, он обиделся.',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
     };
   },
 
   methods: {
-    /*summa(a,b) {
-      return a+b;
-    },
-    minus(a,b){
-      return a-b;
-    },
-    multiple(a,b){
-      return a*b;
-    },
-    division(a,b) {
-      return a / b;
-    },*/
-    // hello() {
-    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
-    //   else {return alert('В массиве dataFull что-то есть');}
-    // }
-
-    addMessages(message, type) {
+      addMessages(message, type) {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
 
       }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      }
     },
     
     clearMessageArea() {
-      this.userMessage = ''
-    }
+      this.emptyUserMessage = '';
+    },
+
+
   },
 
   computed: {},
@@ -201,7 +191,7 @@ html {
 
     }
   }
-}
+
 
 .main-content__message-area-message {
   height: auto;
@@ -380,7 +370,7 @@ html {
 
 
 
-.function_button{
+.function_button {
   width: 70px;
   background: #7c82ca;
   color: white;
@@ -388,7 +378,7 @@ html {
   margin-bottom: 5px;
   border-radius: 30px;
   border: aliceblue solid 2px;
-
+}
 .input-button:hover{
   width: 50px;
   height: 50px;
@@ -403,8 +393,5 @@ html {
 
 .input-button:hover{
   cursor: pointer;
-
 }
-
-
 </style>
