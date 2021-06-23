@@ -52,32 +52,20 @@ export default {
     return {
       userMessage: '',
       messages: [],
+      botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
-
-  methods: {
-    /*summa(a,b) {
-      return a+b;
-    },
-    minus(a,b){
-      return a-b;
-    },
-    multiple(a,b){
-      return a*b;
-    },
-    division(a,b) {
-      return a / b;
-    },*/
-    // hello() {
-    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
-    //   else {return alert('В массиве dataFull что-то есть');}
-    // }
-
+  methods:{
     addMessages(message, type) {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
+      }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
       }
     },
     
@@ -89,7 +77,6 @@ export default {
   computed: {},
 
   mounted() {
-    this.addMessages('Привет!', 'bot')
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
@@ -154,6 +141,7 @@ html {
     flex: 1 0;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     max-height: 100%;
     height: 100%;
@@ -170,6 +158,7 @@ html {
       vertical-align: center;
       text-align: center;
       right:0;
+
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -197,13 +186,7 @@ html {
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-break: break-all;
-}
-
-.main-content__message-area-message {
-  height: auto;
-  width: 90%;
-  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .footer-content {
@@ -349,7 +332,18 @@ html {
   display: flex;
   justify-content: center;
 }
-
+.function_button {
+  width: 70px;
+  background: #7c82ca;
+  color: white;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+}
+.function_button:hover{
+  cursor: pointer;
+}
 .input-button{
   width: 50px;
   height: 50px;
@@ -360,31 +354,9 @@ html {
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
+  cursor: pointer;
 }
-
-.function_button {
-  width: 70px;
-  background: #7c82ca;
-  color: white;
-  margin-left: 30px;
-  margin-bottom: 5px;
-  border-radius: 30px;
-  border: aliceblue solid 2px;
-
   .input-button:hover {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
     border: 1px solid #5e5c5c;
-    margin-top: 20px;
-    outline: none;
-    margin-left: 15px;
-    background: url("../frog.png") no-repeat center;
-    background-size: cover;
   }
-
-  .input-button:hover {
-    cursor: pointer;
-  }
-}
 </style>
