@@ -10,9 +10,10 @@
 
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Привет!</div>
+        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
+          <div class="main-content__message-area-message">{{ commandsBot }}</div>
         </div>
+
         <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
           <div class="main-content__message-area-message">{{ message }}</div>
         </div>
@@ -25,10 +26,11 @@
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
         <button class="input-button" type="button" @click="addMessages"></button>
       </div>
-      <button >/help</button>
+      <button @click="addCommandsBot">/help</button>
     </footer>
 	</div>
 </template>
+
 <script>
 
 import example from "./components/example.vue"
@@ -42,21 +44,22 @@ export default {
 
     return {
       userMessage: '',
-      messages: []
-
+      messages: [],
+      botMessage: [],
+      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот'
     };
   },
 
   methods:{
 
+    addCommandsBot() {
+      this.botMessage.push(this.commandsBot);
+    },
+
     addMessages() {
       this.messages.push(this.userMessage);
-      if(this.userMessage=='Прив') {
-        let blockBot='<div class="main-content__message-area-item message-bot"><div class="main-content__message-area-message">Привет!</div></div>';
-        let b=document.getElementById('main-content');
-        b.append(blockBot);
-      }
-    }
+    },
 
   },
 
@@ -94,6 +97,8 @@ html{
   -23px 0 20px -23px rgba(0, 0, 0, .8),
   23px 0 20px -23px rgba(0, 0, 0, .8),
   0 0 40px rgba(0, 0, 0, .1) inset;
+  font-family: 'system-ui';
+  color: white;
 }
 
 .header-content{
@@ -121,7 +126,6 @@ html{
   background: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -171,7 +175,12 @@ html{
   word-break: break-all;
 }
 
-.footer-content{
+.main-content__message-area-message{
+  height: auto;
+  width: 90%;
+  word-break: break-all;
+}
+.footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
@@ -188,10 +197,71 @@ html{
   display: flex;
 }
 
-.footer_logo{
-  float: right;
-  height: 70px;
-  width: 70px;
+
+
+
+.input-style {
+  text-decoration: none;
+  resize: none;
+  border-radius: 15px;
+  width: 300px;
+  height: 25px;
+  margin-top: 28px;
+  outline: none;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+  overflow: auto;
+}
+
+.input-style::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style::-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-ms-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Enter-Window {
+  display: flex;
+  justify-content: center;
+}
+
+.input-button {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-top: 15px;
   margin-right: 10px;}
@@ -233,7 +303,11 @@ html{
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
+
 .input-button:hover{
   cursor: pointer;
 }
+
+
 </style>
+
