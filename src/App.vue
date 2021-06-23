@@ -1,5 +1,4 @@
 <template>
-
 	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
@@ -10,23 +9,32 @@
     </header>
 
     <main class="main-content">
-      <div class="main-content__message-area">
+      <div class="main-content__message-area" id="main-content">
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
         </div>
-        <div class="main-content__message-area-item message-human">
-            <div class="main-content__message-area-message">Как дела?</div>
-        </div>
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Зашибок</div>
+
+        <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
+          <!--          {{summa(1,2)}}-->
+          <!--          {{minus(1,2)}}-->
+          <!--          {{multiple(1,2)}}-->
+          <!--          {{division(4,2)}}-->
+          <div class="main-content__message-area-message">{{ message }}</div>
+
         </div>
       </div>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
+
+
+
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <button class="input-button" type="button" @click="addMessages"></button>
+
       </div>
+      <button >/help</button>
     </footer>
 	</div>
 </template>
@@ -37,18 +45,52 @@
 export default {
 
   name: "bot",
+
   components: {
 
   },
-  data() {
+  data(){
+
+
     return {
+      userMessage: '',
+      messages: []
 
     };
   },
 
 
+  methods:{
+    summa(a,b) {
+      return a+b;
+    },
+    minus(a,b){
+      return a-b;
+    },
+    multiple(a,b){
+      return a*b;
+    },
+    division(a,b) {
+      return a / b;
+    },
+    // hello() {
+    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
+    //   else {return alert('В массиве dataFull что-то есть');}
+    // }
+    addMessages() {
+      this.messages.push(this.userMessage);
+      if(this.userMessage=='Прив') {
+        alert('Приветттттттт')
+      }
+    }
 
-  mounted() {
+  },
+
+
+
+
+
+  mounted(){
     document.querySelector('textarea').addEventListener('input', function (e) {
       if(e.target.style.height<=100 || e.target.value.length<=100) {
         e.target.style.height = '1px';
@@ -59,9 +101,6 @@ export default {
       }
     })
   },
-  methods: {
-
-  },
 }
 
 
@@ -69,6 +108,12 @@ export default {
 
 <style lang="scss">
 
+
+
+
+html{
+  font-family: system-ui;
+}
 
 
 .chat-bot {
@@ -81,6 +126,8 @@ export default {
   -23px 0 20px -23px rgba(0, 0, 0, .8),
   23px 0 20px -23px rgba(0, 0, 0, .8),
   0 0 40px rgba(0, 0, 0, .1) inset;
+  font-family: 'system-ui';
+  color: white;
 }
 
 .header-content{
@@ -99,7 +146,8 @@ export default {
 
 .bio {
   color: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
+  margin-top: -0.1px;
   margin-left: 45px;
 }
 
@@ -107,7 +155,6 @@ export default {
   background: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -130,7 +177,8 @@ export default {
       right:0;
       }
       .message-human{
-        background-image: radial-gradient(circle, rgba(12, 90, 186, 0.5), rgba(56,0,54,0.5));
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
         margin-left: 195px;
         border-radius: 30px;
         padding: 0.5rem 0.75rem;
@@ -139,13 +187,14 @@ export default {
         box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
       }
       .message-bot{
-        background: radial-gradient(circle, rgba(93, 26, 120, 0.7), rgba(65, 75, 80, 0.7));
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
         border-radius: 30px;
         margin-left: 5px;
         padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       }
     }
   }
@@ -155,7 +204,12 @@ export default {
   word-break: break-all;
 }
 
-.footer-content{
+.main-content__message-area-message{
+  height: auto;
+  width: 90%;
+  word-break: break-all;
+}
+.footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
@@ -166,17 +220,77 @@ export default {
   font-size: 25px;
   font-weight: bold;
   padding-left: 95px;
-  padding-top: 35px;
 }
 
 .close-bot{
   display: flex;
 }
 
-.footer_logo{
-  float: right;
-  height: 70px;
-  width: 70px;
+
+
+
+.input-style {
+  text-decoration: none;
+  resize: none;
+  border-radius: 15px;
+  width: 300px;
+  height: 25px;
+  margin-top: 28px;
+  outline: none;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+  overflow: auto;
+}
+
+.input-style::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style::-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-ms-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Enter-Window {
+  display: flex;
+  justify-content: center;
+}
+
+.input-button {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-top: 15px;
   margin-right: 10px;}
@@ -218,6 +332,11 @@ export default {
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
+
+.input-button:hover{
+  cursor: pointer;
+}
+
 
 </style>
 
