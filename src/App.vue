@@ -1,6 +1,6 @@
 <template>
-
 	<div id="bot" class="chat-bot">
+
     <header class="header-content">
       <span class="close-bot"></span>
       <img class="logo" src="../one.png" alt="Логотип">
@@ -10,45 +10,79 @@
     </header>
 
     <main class="main-content">
-      <div class="main-content__message-area">
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message"></div>
-        </div>
-        <div class="main-content__message-area-item message-human">
-            <div class="main-content__message-area-message">Как дела?</div>
-        </div>
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Зашибок</div>
-        </div>
-        <div class="main-content__message-area-item message-human">
-          <div class="main-content__message-area-message">Четко!</div>
+      <div class="main-content__message-area" id="main-content">
+        <div
+            class="main-content__message-area-item"
+            v-for="(item, index) in messages" :key="index"
+            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
+          <div class="main-content__message-area-message" v-text="item.message"/>
         </div>
       </div>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea v-model="value" class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
-        <button class="input-button" type="button"></button>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
+      <button @click="addMessages(commandsBot, 'bot')">/help</button>
     </footer>
+
 	</div>
 </template>
+
 <script>
+
+import example from "./components/example.vue"
 export default {
   name: "bot",
 
-  data() {
-
+  components: {
+    example
+  },
+  data(){
     return {
-      swap:'',
+      userMessage: '',
+      messages: [],
+      botMessage: [],
+      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). '
     };
   },
+
+  methods:{
+    summa(a,b) {
+      return a+b;
+    },
+    minus(a,b){
+      return a-b;
+    },
+    multiple(a,b){
+      return a*b;
+    },
+    division(a,b) {
+      return a / b;
+    },
+    // hello() {
+    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
+    //   else {return alert('В массиве dataFull что-то есть');}
+    // }
+    addMessages(message, type) {
+      if (!!message) {
+        this.messages.push({message, type});
+        this.clearMessageArea();
+      }
+    },
+    clearMessageArea() {
+      this.userMessage = ''
+    }
+  },
+
   computed: {
 
   },
 
   mounted() {
+    this.addMessages('Привет!', 'bot')
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
@@ -59,9 +93,6 @@ export default {
       }
     });
   },
-  methods: {
-
-  },
 }
 
 </script>
@@ -70,6 +101,7 @@ export default {
 html{
   font-family: system-ui;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -80,6 +112,8 @@ html{
   -23px 0 20px -23px rgba(0, 0, 0, .8),
   23px 0 20px -23px rgba(0, 0, 0, .8),
   0 0 40px rgba(0, 0, 0, .1) inset;
+  font-family: 'system-ui';
+  color: white;
 }
 
 .header-content{
@@ -107,7 +141,6 @@ html{
   background: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -157,7 +190,12 @@ html{
   word-break: break-all;
 }
 
-.footer-content{
+.main-content__message-area-message{
+  height: auto;
+  width: 90%;
+  word-break: break-all;
+}
+.footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
@@ -174,14 +212,72 @@ html{
   display: flex;
 }
 
-.footer_logo{
-  float: right;
-  height: 70px;
-  width: 70px;
+.input-style {
+  text-decoration: none;
+  resize: none;
+  border-radius: 15px;
+  width: 300px;
+  height: 25px;
+  margin-top: 28px;
+  outline: none;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-right: 10px;
+  overflow: auto;
+}
+
+.input-style::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style::-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-ms-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Enter-Window {
+  display: flex;
+  justify-content: center;
+}
+
+.input-button {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-top: 15px;
   margin-right: 10px;}
-  
+
 .input-style{
   text-decoration: none;
   resize: none;
@@ -196,6 +292,7 @@ html{
   padding-right: 10px;
   overflow: auto;
 }
+
 .input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 .input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
 .input-style:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
@@ -204,10 +301,12 @@ html{
 .input-style:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+
 .Enter-Window{
   display: flex;
   justify-content: center;
 }
+
 .input-button{
   width: 50px;
   height: 50px;
@@ -219,6 +318,7 @@ html{
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
+
 .input-button:hover{
   width: 50px;
   height: 50px;
@@ -231,5 +331,9 @@ html{
   background-size: cover;
 }
 
-</style>
+.input-button:hover{
+  cursor: pointer;
+}
 
+
+</style>
