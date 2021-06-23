@@ -21,15 +21,18 @@
 
         </div>
       </div>
+
       <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
+
       <button class="function_button meme">/meme</button>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
+
     </footer>
 
 	</div>
@@ -54,11 +57,13 @@ export default {
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
   methods:{
     addMessages(message, type) {
+
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
@@ -66,11 +71,17 @@ export default {
       if(message === 'Привет'){
         this.addMessages(this.blockBot, 'bot');
       }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      }
     },
     
     clearMessageArea() {
-      this.userMessage = ''
-    }
+      this.emptyUserMessage = '';
+    },
+
+
   },
 
   computed: {},
@@ -181,6 +192,7 @@ html {
       }
     }
   }
+
 
 .main-content__message-area-message {
   height: auto;
@@ -331,6 +343,26 @@ html {
   display: flex;
   justify-content: center;
 }
+
+
+
+.input-button{
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+}
+
+
+
+
+
 .function_button {
   width: 70px;
   background: #7c82ca;
@@ -340,10 +372,12 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
+
 .function_button:hover{
   cursor: pointer;
 }
 .input-button{
+
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -355,7 +389,9 @@ html {
   background-size: cover;
   cursor: pointer;
 }
+
   .input-button:hover {
     border: 1px solid #5e5c5c;
   }
+
 </style>
