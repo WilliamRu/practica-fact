@@ -12,7 +12,7 @@
     <main class="main-content">
       <div class="main-content__message-area">
         <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Привет!</div>
+          <div class="main-content__message-area-message"></div>
         </div>
         <div class="main-content__message-area-item message-human">
             <div class="main-content__message-area-message">Как дела?</div>
@@ -28,7 +28,7 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
+        <textarea v-model="value" class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
         <button class="input-button" type="button"></button>
       </div>
     </footer>
@@ -37,9 +37,11 @@
 <script>
 export default {
   name: "bot",
-  data() {
-    return {
 
+  data() {
+
+    return {
+      swap:'',
     };
   },
   computed: {
@@ -48,14 +50,14 @@ export default {
 
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
-      if(e.target.style.height<=100 || e.target.value.length<=100) {
+      if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 30 + "px";
       }
-      if(e.target.value.length===0){
+      if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
-    })
+    });
   },
   methods: {
 
@@ -211,6 +213,17 @@ html{
   height: 50px;
   border-radius: 50px;
   border: 0;
+  margin-top: 20px;
+  outline:none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+}
+.input-button:hover{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #5e5c5c;
   margin-top: 20px;
   outline:none;
   margin-left: 15px;
