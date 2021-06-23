@@ -21,15 +21,17 @@
 
         </div>
       </div>
+
       <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
       <button class="function_button meme">/meme</button>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
+
     </footer>
 
 	</div>
@@ -52,44 +54,34 @@ export default {
     return {
       userMessage: '',
       messages: [],
+      botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
-
-  methods: {
-    /*summa(a,b) {
-      return a+b;
-    },
-    minus(a,b){
-      return a-b;
-    },
-    multiple(a,b){
-      return a*b;
-    },
-    division(a,b) {
-      return a / b;
-    },*/
-    // hello() {
-    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
-    //   else {return alert('В массиве dataFull что-то есть');}
-    // }
-
+  methods:{
     addMessages(message, type) {
+
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      }
     },
     
     clearMessageArea() {
-      this.userMessage = ''
-    }
+      this.userMessage = '';
+    },
+
+
   },
 
   computed: {},
 
   mounted() {
-    this.addMessages('Привет!', 'bot')
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
@@ -154,6 +146,7 @@ html {
     flex: 1 0;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     max-height: 100%;
     height: 100%;
@@ -170,6 +163,7 @@ html {
       vertical-align: center;
       text-align: center;
       right:0;
+
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -194,6 +188,7 @@ html {
       }
     }
   }
+
 
 .main-content__message-area-message {
   height: auto;
@@ -351,7 +346,10 @@ html {
   justify-content: center;
 }
 
+
+
 .input-button{
+
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -398,6 +396,24 @@ html {
   font-weight: bold;
   border-radius: 30px;
   border: aliceblue solid 2px;
+}
+
+.function_button:hover{
+  cursor: pointer;
+}
+.input-button{
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  cursor: pointer;
+}
 
 }
 .function_button:hover {
