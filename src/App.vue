@@ -1,4 +1,5 @@
 <template>
+
 	<div id="bot" class="chat-bot">
 
     <header class="header-content">
@@ -20,6 +21,8 @@
 
         </div>
       </div>
+      <button class="function_button help">/help</button>
+      <button class="function_button meme">/meme</button>
     </main>
 
     <footer class="footer-content">
@@ -27,22 +30,27 @@
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
+
       <button @click="addMessages(commandsBot, 'bot')">/help</button>
     </footer>
 
 	</div>
+
 </template>
 
 <script>
 
 import example from "./components/example.vue"
+
 export default {
   name: "bot",
 
   components: {
     example
   },
+
   data(){
+
     return {
       userMessage: '',
       messages: [],
@@ -53,8 +61,8 @@ export default {
     };
   },
 
-  methods:{
-    summa(a,b) {
+  methods: {
+    /*summa(a,b) {
       return a+b;
     },
     minus(a,b){
@@ -65,16 +73,17 @@ export default {
     },
     division(a,b) {
       return a / b;
-    },
+    },*/
     // hello() {
     //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
     //   else {return alert('В массиве dataFull что-то есть');}
     // }
-    
+
     addMessages(message, type) {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
+
       }
     },
     
@@ -83,9 +92,7 @@ export default {
     }
   },
 
-  computed: {
-
-  },
+  computed: {},
 
   mounted() {
     this.addMessages('Привет!', 'bot')
@@ -94,17 +101,19 @@ export default {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 30 + "px";
       }
+
       if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
     });
+
   },
 }
 
 </script>
 
 <style lang="scss">
-html{
+html {
   font-family: system-ui;
 }
 
@@ -121,7 +130,7 @@ html{
   color: white;
 }
 
-.header-content{
+.header-content {
   background-color: #7c82ca;
   height: 100px;
 }
@@ -146,6 +155,7 @@ html{
   background: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
+
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -154,6 +164,7 @@ html{
     width: 100%;
     max-height: 100%;
     height: 100%;
+
     &-item {
       display: flex;
       justify-content: center;
@@ -187,33 +198,37 @@ html{
         -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
         box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       }
+
     }
   }
-.main-content__message-area-message{
+}
+
+.main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-all;
 }
 
-.main-content__message-area-message{
+.main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-all;
 }
+
 .footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
 }
 
-.name-bots{
+.name-bots {
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
   padding-left: 95px;
 }
 
-.close-bot{
+.close-bot {
   display: flex;
 }
 
@@ -284,46 +299,95 @@ html{
   margin-right: 10px;
 }
 
+
 .input-style{
+
   text-decoration: none;
   resize: none;
   border-radius: 15px;
   width: 300px;
   height: 25px;
-  margin-top: 28px;
+  margin-top: 38px;
   margin-bottom: 15px;
-  outline:none;
+  outline: none;
   padding-left: 15px;
   padding-top: 10px;
   padding-right: 10px;
   overflow: auto;
 }
 
-.input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
-.input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
-.input-style:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
-.input-style:-ms-input-placeholder            {opacity: 1; transition: opacity 0.3s ease;}
-.input-style:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
-.input-style:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
-.input-style:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
-.input-style:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
 
-.Enter-Window{
+.input-style::-webkit-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style::-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-moz-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:-ms-input-placeholder {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.input-style:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Enter-Window {
+
   display: flex;
   justify-content: center;
 }
 
+
 .input-button{
+
   width: 50px;
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 20px;
-  outline:none;
+  margin-top: 30px;
+  outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
+
+
+
+
+.function_button{
+  width: 70px;
+  background: #7c82ca;
+  color: white;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
 
 .input-button:hover{
   width: 50px;
@@ -339,6 +403,7 @@ html{
 
 .input-button:hover{
   cursor: pointer;
+
 }
 
 

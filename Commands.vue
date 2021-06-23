@@ -22,19 +22,20 @@ export default {
       'Перемножь','перемножь', 'Помножить' ,'помножить','Помножь','помножь'],
     readDivision:['/', 'Делить','делить','Дели','дели', 'Деление','деление', 'Разделить','разделить','Раздели','раздели',
       'Подели', 'подели'],
+
   },
   computed: {
     sum() {
-      return Sum=this.value +this.value1;
+      return this.value +this.value1;
     },
     minus() {
-      return Minus=this.value -this.value1;
+      return this.value -this.value1;
     },
     mul() {
       return Math.imul(this.value,this.value1);
     },
     division() {
-      return Division=this.value /this.value1;
+      return this.value /this.value1;
     }
   },
 }
