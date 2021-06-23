@@ -13,6 +13,9 @@
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
         </div>
+        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
+          <div class="main-content__message-area-message">{{ commandsBot }}</div>
+        </div>
 
         <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
           <!--          {{summa(1,2)}}-->
@@ -34,7 +37,7 @@
         <button class="input-button" type="button" @click="addMessages"></button>
 
       </div>
-      <button >/help</button>
+      <button @click="addCommandsBot">/help</button>
     </footer>
 	</div>
 </template>
@@ -54,8 +57,9 @@ export default {
 
     return {
       userMessage: '',
-      messages: []
-
+      messages: [],
+      botMessage: [],
+      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). '
     };
   },
 
@@ -77,6 +81,9 @@ export default {
     //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
     //   else {return alert('В массиве dataFull что-то есть');}
     // }
+    addCommandsBot() {
+      this.botMessage.push(this.commandsBot);
+    },
     addMessages() {
       this.messages.push(this.userMessage);
       if(this.userMessage=='Прив') {
