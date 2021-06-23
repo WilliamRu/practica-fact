@@ -93,7 +93,7 @@ export default {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
-        e.target.style.height = e.target.scrollHeight + 30 + "px";
+        e.target.style.height = e.target.scrollHeight + 10 + "px";
       }
 
       if (e.target.value.length == 0) {
@@ -107,7 +107,7 @@ export default {
 
 <style lang="scss">
 html {
-  font-family: system-ui;
+  font-family: system-ui,serif;
 }
 
 .chat-bot {
@@ -129,7 +129,7 @@ html {
 }
 
 .logo {
-  margin: 10px;
+  margin: 8px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -185,6 +185,7 @@ html {
         color: rgba(245, 245, 245, 1);
         background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
         border-radius: 30px;
+        margin-top: 3px;
         margin-left: 15px;
         padding: 0.5rem 0.75rem;
         -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
@@ -197,13 +198,13 @@ html {
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .footer-content {
@@ -296,7 +297,7 @@ html {
   border-radius: 15px;
   width: 300px;
   height: 25px;
-  margin-top: 38px;
+  margin-top: 30px;
   margin-bottom: 15px;
   outline: none;
   padding-left: 15px;
@@ -355,36 +356,70 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 30px;
+  margin-top: 24px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
 
+.input-button:hover {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 24px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  box-shadow: 0px -1px 20px -10px #000000 inset;
+}
+
+.input-button:active {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 24px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  box-shadow: 0px -1px 20px -1px #000000 inset;
+}
+
 .function_button {
   width: 70px;
-  background: #7c82ca;
-  color: white;
+  background: #ffffff;
+  color: #000000;
+  margin-top: 5px;
   margin-left: 30px;
-  margin-bottom: 5px;
+  font-weight: bold;
   border-radius: 30px;
   border: aliceblue solid 2px;
 
-  .input-button:hover {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    border: 1px solid #5e5c5c;
-    margin-top: 20px;
-    outline: none;
-    margin-left: 15px;
-    background: url("../frog.png") no-repeat center;
-    background-size: cover;
-  }
-
-  .input-button:hover {
-    cursor: pointer;
-  }
+}
+.function_button:hover {
+  width: 70px;
+  background: #ffffff;
+  color: #000000;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+  box-shadow: 0px -1px 20px -10px #000000 inset;
+}
+.function_button:active {
+  width: 70px;
+  background: #ffffff;
+  color: #000000;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+  box-shadow: 0px -1px 20px -5px #000000 inset;
 }
 </style>
