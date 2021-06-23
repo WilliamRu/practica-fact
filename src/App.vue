@@ -27,8 +27,7 @@
       <div class="Enter-Window">
 
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
-        <input class="input-button" type="button" @click="messages.push(userMessage)"></input>
-        <!--<img src="../frog.png" class="frog">-->
+        <button class="input-button" type="button" @click="messages.push(userMessage)"></button>
       </div>
       <button >/help</button>
     </footer>
@@ -244,5 +243,8 @@ html{
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
+}
+.input-button:hover{
+  cursor: pointer;
 }
 </style>
