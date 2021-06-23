@@ -21,7 +21,9 @@
 
         </div>
       </div>
-      <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
+
+      <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
+
       <button class="function_button meme">/meme</button>
     </main>
 
@@ -30,7 +32,6 @@
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-
 
     </footer>
 
@@ -54,20 +55,22 @@ export default {
     return {
       userMessage: '',
       messages: [],
-      botCommandsMessage: [],
+      botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      botAutoMessage: [],
-      emptyUserMessage: 'Лягушонку не нравится тот факт, что вы ему отправляете пустые сообщения, он обиделся.',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
+
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
+  methods:{
+    addMessages(message, type) {
 
-  methods: {
-      addMessages(message, type) {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
-
+      }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
       }
       if(message == 'Привет'){
         let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
@@ -85,7 +88,6 @@ export default {
   computed: {},
 
   mounted() {
-    this.addMessages('Привет!', 'bot')
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
@@ -96,7 +98,6 @@ export default {
         e.target.style.height = '25px';
       }
     });
-
   },
 }
 
@@ -151,6 +152,7 @@ html {
     flex: 1 0;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     max-height: 100%;
     height: 100%;
@@ -167,6 +169,7 @@ html {
       vertical-align: center;
       text-align: center;
       right:0;
+
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -188,7 +191,6 @@ html {
         -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
         box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       }
-
     }
   }
 
@@ -196,13 +198,7 @@ html {
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-break: break-all;
-}
-
-.main-content__message-area-message {
-  height: auto;
-  width: 90%;
-  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .footer-content {
@@ -289,9 +285,7 @@ html {
   margin-right: 10px;
 }
 
-
 .input-style{
-
   text-decoration: none;
   resize: none;
   border-radius: 15px;
@@ -305,7 +299,6 @@ html {
   padding-right: 10px;
   overflow: auto;
 }
-
 
 .input-style::-webkit-input-placeholder {
   opacity: 1;
@@ -348,10 +341,10 @@ html {
 }
 
 .Enter-Window {
-
   display: flex;
   justify-content: center;
 }
+
 
 
 .input-button{
@@ -370,6 +363,7 @@ html {
 
 
 
+
 .function_button {
   width: 70px;
   background: #7c82ca;
@@ -379,19 +373,26 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
-.input-button:hover{
+
+.function_button:hover{
+  cursor: pointer;
+}
+.input-button{
+
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  border: 1px solid #5e5c5c;
-  margin-top: 20px;
-  outline:none;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
   background-size: cover;
-}
-
-.input-button:hover{
   cursor: pointer;
 }
+
+  .input-button:hover {
+    border: 1px solid #5e5c5c;
+  }
+
 </style>
