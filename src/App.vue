@@ -9,7 +9,7 @@
     </header>
 
     <main class="main-content">
-      <div class="main-content__message-area">
+      <div class="main-content__message-area" id="main-content">
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
         </div>
@@ -27,7 +27,7 @@
       <div class="Enter-Window">
 
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
-        <button class="input-button" type="button" @click="messages.push(userMessage)"></button>
+        <button class="input-button" type="button" @click="addMessages"></button>
       </div>
       <button >/help</button>
     </footer>
@@ -68,7 +68,12 @@ export default {
     //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
     //   else {return alert('В массиве dataFull что-то есть');}
     // }
-
+    addMessages() {
+      this.messages.push(this.userMessage);
+      if(this.userMessage=='Прив') {
+        alert('Приветттттттт')
+      }
+    }
 
   },
 
@@ -95,6 +100,7 @@ export default {
 html{
   font-family: system-ui;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
