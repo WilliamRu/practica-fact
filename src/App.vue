@@ -95,10 +95,6 @@ export default {
       }
     })
   },
-
-  methods: {
-    
-  },
 }
 
 </script>
