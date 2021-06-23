@@ -7,11 +7,11 @@
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
     </header>
-
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
+          <img :src="" alt="">
         </div>
         <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
           <div class="main-content__message-area-message">{{ commandsBot }}</div>
@@ -38,6 +38,7 @@
 
       </div>
       <button @click="addCommandsBot">/help</button>
+      <button @click="outputMemes">/memes</button>
     </footer>
 	</div>
 </template>
@@ -59,7 +60,11 @@ export default {
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). '
+      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      imgMemes: [
+        'отправить.jpg',
+        'отправить1.jpg',
+      ]
     };
   },
 
@@ -84,13 +89,16 @@ export default {
     addCommandsBot() {
       this.botMessage.push(this.commandsBot);
     },
+    getRandomImg() {
+      const randomValue = 'отправить.jpg'
+      return `./assets/${randomValue}`
+    },
     addMessages() {
       this.messages.push(this.userMessage);
       if(this.userMessage=='Прив') {
         alert('Приветттттттт')
       }
     }
-
   },
 
 
@@ -159,7 +167,7 @@ html{
 }
 
 .main-content {
-  background: no-repeat url(../back.png);
+  background-: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
   &__message-area {
