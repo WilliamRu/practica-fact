@@ -23,7 +23,6 @@
       </div>
 
       <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
-
       <button class="function_button meme">/meme</button>
     </main>
 
@@ -57,7 +56,6 @@ export default {
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
@@ -72,14 +70,10 @@ export default {
         let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
         setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
       }
-      if(message == 'Привет'){
-        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
-        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
-      }
     },
     
     clearMessageArea() {
-      this.emptyUserMessage = '';
+      this.userMessage = '';
     },
 
 
