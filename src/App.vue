@@ -1,5 +1,4 @@
 <template>
-
 	<div id="bot" class="chat-bot">
     <header class="header-content">
       <span class="close-bot"></span>
@@ -10,38 +9,74 @@
     </header>
 
     <main class="main-content">
-      <div class="main-content__message-area">
+      <div class="main-content__message-area" id="main-content">
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
         </div>
-        <div class="main-content__message-area-item message-human">
-            <div class="main-content__message-area-message">Как дела?</div>
-        </div>
-        <div class="main-content__message-area-item message-bot">
-          <div class="main-content__message-area-message">Зашибок</div>
-        </div>
-        <div class="main-content__message-area-item message-human">
-          <div class="main-content__message-area-message">Четко!</div>
+        <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
+          <!--          {{summa(1,2)}}-->
+          <!--          {{minus(1,2)}}-->
+          <!--          {{multiple(1,2)}}-->
+          <!--          {{division(4,2)}}-->
+          <div class="main-content__message-area-message">{{ message }}</div>
         </div>
       </div>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение"></textarea>
-        <button class="input-button" type="button"></button>
+
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
+        <button class="input-button" type="button" @click="addMessages"></button>
       </div>
+      <button >/help</button>
     </footer>
 	</div>
 </template>
 <script>
+
+import example from "./components/example.vue"
 export default {
   name: "bot",
-  data() {
+
+  components: {
+    example
+  },
+  data(){
+
     return {
+      userMessage: '',
+      messages: []
 
     };
   },
+
+  methods:{
+    summa(a,b) {
+      return a+b;
+    },
+    minus(a,b){
+      return a-b;
+    },
+    multiple(a,b){
+      return a*b;
+    },
+    division(a,b) {
+      return a / b;
+    },
+    // hello() {
+    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
+    //   else {return alert('В массиве dataFull что-то есть');}
+    // }
+    addMessages() {
+      this.messages.push(this.userMessage);
+      if(this.userMessage=='Прив') {
+        alert('Приветттттттт')
+      }
+    }
+
+  },
+
   computed: {
 
   },
@@ -57,6 +92,7 @@ export default {
       }
     })
   },
+
   methods: {
     
   },
@@ -68,6 +104,7 @@ export default {
 html{
   font-family: system-ui;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -217,5 +254,9 @@ html{
   background: url("../frog.png") no-repeat center;
   background-size: cover;
 }
-</style>
 
+.input-button:hover{
+  cursor: pointer;
+}
+
+</style>
