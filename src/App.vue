@@ -1,5 +1,6 @@
 <template>
 	<div id="bot" class="chat-bot">
+
     <header class="header-content">
       <span class="close-bot"></span>
       <img class="logo" src="../one.png" alt="Логотип">
@@ -10,24 +11,23 @@
 
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
-          <div class="main-content__message-area-message">{{ commandsBot }}</div>
-        </div>
-
-        <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
-          <div class="main-content__message-area-message">{{ message }}</div>
+        <div
+            class="main-content__message-area-item"
+            v-for="(item, index) in messages" :key="index"
+            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
+          <div class="main-content__message-area-message" v-text="item.message"/>
         </div>
       </div>
     </main>
 
     <footer class="footer-content">
       <div class="Enter-Window">
-
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
-        <button class="input-button" type="button" @click="addMessages"></button>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-      <button @click="addCommandsBot">/help</button>
+      <button @click="addMessages(commandsBot, 'bot')">/help</button>
     </footer>
+
 	</div>
 </template>
 
@@ -41,26 +41,30 @@ export default {
     example
   },
   data(){
-
     return {
       userMessage: '',
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот'
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
 
   methods:{
 
-    addCommandsBot() {
-      this.botMessage.push(this.commandsBot);
+    addMessages(message, type) {
+      if (!!message) {
+        this.messages.push({message, type});
+        this.clearMessageArea();
+      }
+      if(message == 'Привет'){
+        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
+        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      }
     },
-
-    addMessages() {
-      this.messages.push(this.userMessage);
-    },
-
+    clearMessageArea() {
+      this.userMessage = ''
+    }
   },
 
   computed: {
@@ -69,14 +73,14 @@ export default {
 
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
-      if(e.target.style.height<=100 || e.target.value.length<=100) {
+      if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 30 + "px";
       }
-      if(e.target.value.length===0){
+      if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
-    })
+    });
   },
 }
 
@@ -131,9 +135,11 @@ html{
     flex: 1 0;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     max-height: 100%;
     height: 100%;
+
     &-item {
       display: flex;
       justify-content: center;
@@ -146,6 +152,7 @@ html{
       vertical-align: center;
       text-align: center;
       right:0;
+
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -172,13 +179,7 @@ html{
 .main-content__message-area-message{
   height: auto;
   width: 90%;
-  word-break: break-all;
-}
-
-.main-content__message-area-message{
-  height: auto;
-  width: 90%;
-  word-break: break-all;
+  word-wrap: break-word;
 }
 .footer-content {
   background-color: #7c82ca;
@@ -196,9 +197,6 @@ html{
 .close-bot{
   display: flex;
 }
-
-
-
 
 .input-style {
   text-decoration: none;
@@ -265,7 +263,7 @@ html{
   border-radius: 50%;
   margin-top: 15px;
   margin-right: 10px;}
-  
+
 .input-style{
   text-decoration: none;
   resize: none;
@@ -280,6 +278,7 @@ html{
   padding-right: 10px;
   overflow: auto;
 }
+
 .input-style::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 .input-style::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
 .input-style:-moz-placeholder                 {opacity: 1; transition: opacity 0.3s ease;}
@@ -288,10 +287,12 @@ html{
 .input-style:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
 .input-style:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
+
 .Enter-Window{
   display: flex;
   justify-content: center;
 }
+
 .input-button{
   width: 50px;
   height: 50px;
@@ -305,9 +306,17 @@ html{
 }
 
 .input-button:hover{
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #5e5c5c;
+  margin-top: 20px;
+  outline:none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
   cursor: pointer;
 }
 
 
 </style>
-
