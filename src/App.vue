@@ -21,7 +21,7 @@
 
         </div>
       </div>
-      <button class="function_button help">/help</button>
+      <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
       <button class="function_button meme">/meme</button>
     </main>
 
@@ -30,8 +30,6 @@
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-
-      <button @click="addMessages(commandsBot, 'bot')">/help</button>
     </footer>
 
 	</div>
@@ -54,10 +52,7 @@ export default {
     return {
       userMessage: '',
       messages: [],
-      botCommandsMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      botAutoMessage: [],
-      emptyUserMessage: 'Лягушонку не нравится тот факт, что вы ему отправляете пустые сообщения, он обиделся.'
     };
   },
 
@@ -83,7 +78,6 @@ export default {
       if (!!message) {
         this.messages.push({message, type});
         this.clearMessageArea();
-
       }
     },
     
@@ -106,7 +100,6 @@ export default {
         e.target.style.height = '25px';
       }
     });
-
   },
 }
 
@@ -198,10 +191,8 @@ html {
         -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
         box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       }
-
     }
   }
-}
 
 .main-content__message-area-message {
   height: auto;
@@ -299,9 +290,7 @@ html {
   margin-right: 10px;
 }
 
-
 .input-style{
-
   text-decoration: none;
   resize: none;
   border-radius: 15px;
@@ -315,7 +304,6 @@ html {
   padding-right: 10px;
   overflow: auto;
 }
-
 
 .input-style::-webkit-input-placeholder {
   opacity: 1;
@@ -358,14 +346,11 @@ html {
 }
 
 .Enter-Window {
-
   display: flex;
   justify-content: center;
 }
 
-
 .input-button{
-
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -377,10 +362,7 @@ html {
   background-size: cover;
 }
 
-
-
-
-.function_button{
+.function_button {
   width: 70px;
   background: #7c82ca;
   color: white;
@@ -389,22 +371,20 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 
-.input-button:hover{
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 1px solid #5e5c5c;
-  margin-top: 20px;
-  outline:none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
+  .input-button:hover {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #5e5c5c;
+    margin-top: 20px;
+    outline: none;
+    margin-left: 15px;
+    background: url("../frog.png") no-repeat center;
+    background-size: cover;
+  }
+
+  .input-button:hover {
+    cursor: pointer;
+  }
 }
-
-.input-button:hover{
-  cursor: pointer;
-
-}
-
-
 </style>
