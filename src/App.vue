@@ -13,8 +13,12 @@
         <div class="main-content__message-area-item message-bot">
           <div class="main-content__message-area-message">Привет!</div>
         </div>
-        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botMessage">
+
+        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botCommandsMessage">
           <div class="main-content__message-area-message">{{ commandsBot }}</div>
+        </div>
+        <div class="main-content__message-area-item message-bot" v-for="(message, index) in botAutoMessage">
+          <div class="main-content__message-area-message">{{ emptyUserMessage }}</div>
         </div>
 
         <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
@@ -53,8 +57,10 @@ export default {
     return {
       userMessage: '',
       messages: [],
-      botMessage: [],
-      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). '
+      botCommandsMessage: [],
+      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      botAutoMessage: [],
+      emptyUserMessage: 'Лягушонку не нравится тот факт, что вы ему отправляете пустые сообщения, он обиделся.'
     };
   },
 
@@ -76,12 +82,13 @@ export default {
     //   else {return alert('В массиве dataFull что-то есть');}
     // }
     addCommandsBot() {
-      this.botMessage.push(this.commandsBot);
+      this.botCommandsMessage.push(this.commandsBot);
     },
     addMessages() {
-      this.messages.push(this.userMessage);
-      if(this.userMessage=='Прив') {
-        alert('Приветттттттт')
+      if (this.userMessage=='') {
+        this.botAutoMessage.push(this.emptyUserMessage);
+      }else{
+        this.messages.push(this.userMessage);
       }
     }
 
@@ -121,7 +128,6 @@ html{
   -23px 0 20px -23px rgba(0, 0, 0, .8),
   23px 0 20px -23px rgba(0, 0, 0, .8),
   0 0 40px rgba(0, 0, 0, .1) inset;
-  font-family: 'system-ui';
   color: white;
 }
 
@@ -174,7 +180,7 @@ html{
       .message-human{
         color: rgba(245, 245, 245, 1);
         background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
-        margin-left: 195px;
+        margin-left: 175px;
         border-radius: 30px;
         padding: 0.5rem 0.75rem;
         -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
@@ -185,7 +191,7 @@ html{
         color: rgba(245, 245, 245, 1);
         background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
         border-radius: 30px;
-        margin-left: 5px;
+        margin-left: 15px;
         padding: 0.5rem 0.75rem;
         -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
         -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
@@ -220,9 +226,6 @@ html{
 .close-bot{
   display: flex;
 }
-
-
-
 
 .input-style {
   text-decoration: none;
@@ -288,7 +291,8 @@ html{
   height: 50px;
   border-radius: 50%;
   margin-top: 15px;
-  margin-right: 10px;}
+  margin-right: 10px;
+}
   
 .input-style{
   text-decoration: none;
