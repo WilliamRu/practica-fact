@@ -14,10 +14,6 @@
           <div class="main-content__message-area-message">Привет!</div>
         </div>
         <div class="main-content__message-area-item message-human" v-for="(message, index) in messages">
-          <!--          {{summa(1,2)}}-->
-          <!--          {{minus(1,2)}}-->
-          <!--          {{multiple(1,2)}}-->
-          <!--          {{division(4,2)}}-->
           <div class="main-content__message-area-message">{{ message }}</div>
         </div>
       </div>
@@ -52,26 +48,13 @@ export default {
   },
 
   methods:{
-    summa(a,b) {
-      return a+b;
-    },
-    minus(a,b){
-      return a-b;
-    },
-    multiple(a,b){
-      return a*b;
-    },
-    division(a,b) {
-      return a / b;
-    },
-    // hello() {
-    //   if (this.messages.length == 0) {return alert('Массив dataFull пустой');}
-    //   else {return alert('В массиве dataFull что-то есть');}
-    // }
+
     addMessages() {
       this.messages.push(this.userMessage);
       if(this.userMessage=='Прив') {
-        alert('Приветттттттт')
+        let blockBot='<div class="main-content__message-area-item message-bot"><div class="main-content__message-area-message">Привет!</div></div>';
+        let b=document.getElementById('main-content');
+        b.append(blockBot);
       }
     }
 
