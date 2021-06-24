@@ -1,6 +1,6 @@
 <template>
 
-	<div id="bot" class="chat-bot">
+  <div id="bot" class="chat-bot">
 
     <header class="header-content">
       <span class="close-bot"></span>
@@ -9,21 +9,24 @@
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
     </header>
-
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-
+        
         <div
             class="main-content__message-area-item"
             v-for="(item, index) in messages" :key="index"
-            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
-          <div class="main-content__message-area-message" v-text="item.message"/>
-
+            :class="[
+                {'message-bot': item.type === 'bot'},
+                {'message-human': item.type === 'human'},
+                {'message-bot message-img-bot': item.type === 'bot-image'}
+            ]"
+        >
+          <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="150px" height="150px">
+          <div class="main-content__message-area-message" v-text="item.message" v-else/>
         </div>
       </div>
-
-      <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
-      <button class="function_button meme">/meme</button>
+      <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
+      <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
     </main>
 
     <footer class="footer-content">
@@ -34,29 +37,36 @@
       </div>
 
     </footer>
-
-	</div>
-
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: "bot",
-  data(){
+  name: "app",
+  data() {
     return {
+      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
+      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
+      memesBot: [
+          '/memes/onemem.jpg',
+          '/memes/twomem.jpg',
+          '/memes/four.png',
+          '/memes/15.jpg',
+          '/memes/16.jpg',
+      ],
     };
   },
-  methods:{
+  methods: {
     addMessages(message, type) {
 
       if (!!message) {
         this.messages.push({message, type});
+      }
+      if(type !== 'bot-image') {
         this.clearMessageArea();
       }
       if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
@@ -66,8 +76,10 @@ export default {
     clearMessageArea() {
       this.userMessage = ''
     },
-
-
+    getRandomImage(){
+     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    }
+  },
     splitUserMessage() {
       let splitMessage = this.userMessage.split(' ');
       console.log(splitMessage);
@@ -77,6 +89,7 @@ export default {
   },
 
   computed: {},
+
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
@@ -90,12 +103,13 @@ export default {
     });
   },
 }
-</script>
 
+</script>
 <style lang="scss">
 html {
   font-family: system-ui,serif;
 }
+
 
 .chat-bot {
   /*background-color: #7c82ca;*/
@@ -132,7 +146,7 @@ html {
 }
 
 .main-content {
-  background: no-repeat url(../back.png);
+  background-: no-repeat url(../back.png);
   background-size: 450px 500px;
   height: 500px;
 
@@ -157,8 +171,7 @@ html {
       margin-bottom: 8px;
       vertical-align: center;
       text-align: center;
-      right:0;
-
+      right: 0;
       }
       .message-human{
         color: rgba(245, 245, 245, 1);
@@ -183,6 +196,8 @@ html {
       }
     }
   }
+}
+
 
 
 .main-content__message-area-message {
@@ -266,7 +281,7 @@ html {
   margin-right: 10px;
 }
 
-.input-style{
+.input-style {
   text-decoration: none;
   resize: none;
   border-radius: 15px;
@@ -325,6 +340,7 @@ html {
   display: flex;
   justify-content: center;
 }
+
 .input-button{
   cursor: pointer;
   width: 50px;
@@ -376,7 +392,6 @@ html {
 }
 
 .input-button{
-
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -388,7 +403,6 @@ html {
   background-size: cover;
   cursor: pointer;
 }
-
 .function_button:hover {
   cursor: pointer;
   width: 70px;
