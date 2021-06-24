@@ -40,23 +40,16 @@
 
 <script>
 
-import example from "./components/example.vue"
-
 export default {
   name: "bot",
-
-  components: {
-    example
-  },
-
   data(){
-
     return {
       userMessage: '',
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
+      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот"]
     };
   },
   methods:{
@@ -66,21 +59,16 @@ export default {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
-      if(message == 'Привет'){
-        let timeAnswerBot=setInterval(() => this.addMessages(this.blockBot, 'bot'), 500);
-        setTimeout(() => { clearInterval(timeAnswerBot); }, 500);
+      if(this.helloMessage.indexOf(message) !== -1) {
+        this.addMessages(this.blockBot, 'bot');
       }
     },
-    
     clearMessageArea() {
       this.userMessage = '';
     },
-
-
   },
 
   computed: {},
-
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
@@ -94,7 +82,6 @@ export default {
     });
   },
 }
-
 </script>
 
 <style lang="scss">
@@ -218,21 +205,6 @@ html {
 .close-bot {
   display: flex;
 }
-
-.input-style {
-  text-decoration: none;
-  resize: none;
-  border-radius: 15px;
-  width: 300px;
-  height: 25px;
-  margin-top: 28px;
-  outline: none;
-  padding-left: 15px;
-  padding-top: 10px;
-  padding-right: 10px;
-  overflow: auto;
-}
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -345,11 +317,8 @@ html {
   display: flex;
   justify-content: center;
 }
-
-
-
 .input-button{
-
+  cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -398,9 +367,6 @@ html {
   border: aliceblue solid 2px;
 }
 
-.function_button:hover{
-  cursor: pointer;
-}
 .input-button{
 
   width: 50px;
@@ -415,8 +381,8 @@ html {
   cursor: pointer;
 }
 
-
 .function_button:hover {
+  cursor: pointer;
   width: 70px;
   background: #ffffff;
   color: #000000;
@@ -437,5 +403,38 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -5px #000000 inset;
+}
+
+::-webkit-scrollbar-button {
+  background-image:url('');
+  background-repeat:no-repeat;
+  width:6px;
+  height:0px
+}
+
+::-webkit-scrollbar-track {
+  background-color:#7c82ca;
+  box-shadow:0px 0px 3px #7c82ca inset;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #5ec66d;
+  box-shadow:0px 1px 1px #7c82ca inset;
+  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+::-webkit-resizer{
+  background-image:url('');
+  background-repeat:no-repeat;
+  width:7px;
+  height:0px
+}
+
+::-webkit-scrollbar{
+  width: 11px;
 }
 </style>
