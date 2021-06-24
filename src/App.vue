@@ -28,7 +28,7 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
 
@@ -415,7 +415,7 @@ html {
   cursor: pointer;
 }
 
-}
+
 .function_button:hover {
   width: 70px;
   background: #ffffff;
