@@ -52,11 +52,11 @@ export default {
       commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
       memesBot: [
-          '/memes/onemem.jpg',
-          '/memes/twomem.jpg',
-          '/memes/four.png',
-          '/memes/15.jpg',
-          '/memes/16.jpg',
+        '/memes/onemem.jpg',
+        '/memes/twomem.jpg',
+        '/memes/four.png',
+        '/memes/15.jpg',
+        '/memes/16.jpg',
       ],
     };
   },
@@ -66,26 +66,23 @@ export default {
       if (!!message) {
         this.messages.push({message, type});
       }
-      if(type !== 'bot-image') {
+      if (type !== 'bot-image') {
         this.clearMessageArea();
       }
-      if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
+      if (message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
         this.addMessages(this.blockBot, 'bot');
       }
     },
     clearMessageArea() {
       this.userMessage = ''
     },
-    getRandomImage(){
-     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    getRandomImage() {
+      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     }
   },
-    splitUserMessage() {
-      let splitMessage = this.userMessage.split(' ');
-      console.log(splitMessage);
-    },
-
-
+  splitUserMessage() {
+    let splitMessage = this.userMessage.split(' ');
+    console.log(splitMessage);
   },
 
   computed: {},
@@ -101,7 +98,7 @@ export default {
         e.target.style.height = '25px';
       }
     });
-  },
+  }
 }
 
 </script>
@@ -109,7 +106,6 @@ export default {
 html {
   font-family: system-ui,serif;
 }
-
 
 .chat-bot {
   /*background-color: #7c82ca;*/
@@ -146,7 +142,7 @@ html {
 }
 
 .main-content {
-  background-: no-repeat url(../back.png);
+  background-: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
 
@@ -196,7 +192,7 @@ html {
       }
     }
   }
-}
+
 
 
 
