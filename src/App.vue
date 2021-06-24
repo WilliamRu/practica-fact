@@ -1,6 +1,6 @@
 <template>
 
-	<div id="bot" class="chat-bot">
+  <div id="bot" class="chat-bot">
 
     <header class="header-content">
       <span class="close-bot"></span>
@@ -9,21 +9,24 @@
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
     </header>
-
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
 
         <div
             class="main-content__message-area-item"
             v-for="(item, index) in messages" :key="index"
-            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
-          <div class="main-content__message-area-message" v-text="item.message"/>
-
+            :class="[
+                {'message-bot': item.type === 'bot'},
+                {'message-human': item.type === 'human'},
+                {'message-bot message-img-bot': item.type === 'bot-image'}
+            ]"
+        >
+          <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="150px" height="150px">
+          <div class="main-content__message-area-message" v-text="item.message" v-else/>
         </div>
       </div>
-
-      <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
-      <button class="function_button meme">/meme</button>
+      <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
+      <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
     </main>
 
     <footer class="footer-content">
@@ -34,49 +37,52 @@
       </div>
 
     </footer>
-
-	</div>
-
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: "bot",
-  data(){
+  name: "app",
+  data() {
     return {
+      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот"]
+      memesBot: [
+        '/memes/onemem.jpg',
+        '/memes/twomem.jpg',
+        '/memes/four.png',
+        '/memes/15.jpg',
+        '/memes/16.jpg',
+      ],
     };
   },
-  methods:{
+  methods: {
     addMessages(message, type) {
-
       if (!!message) {
         this.messages.push({message, type});
+      }
+      if(type !== 'bot-image') {
         this.clearMessageArea();
       }
-      if(this.helloMessage.indexOf(message) !== -1) {
+      if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
         this.addMessages(this.blockBot, 'bot');
       }
     },
     clearMessageArea() {
       this.userMessage = ''
     },
-
-
-    splitUserMessage() {
-      let splitMessage = this.userMessage.split(' ');
-      console.log(splitMessage);
-    },
-
-
+    getRandomImage(){
+      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    }
   },
-
+  splitUserMessage() {
+    let splitMessage = this.userMessage.split(' ');
+    console.log(splitMessage);
+  },
   computed: {},
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
@@ -84,7 +90,6 @@ export default {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 10 + "px";
       }
-
       if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
@@ -92,16 +97,10 @@ export default {
   },
 }
 </script>
-
 <style lang="scss">
 html {
-<<<<<<< HEAD
-  font-family: 'Arial';
-=======
   font-family: system-ui,serif;
->>>>>>> 6c3d4aa6a0de0af27789491e20acda8bcf892d98
 }
-
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -114,12 +113,10 @@ html {
   0 0 40px rgba(0, 0, 0, .1) inset;
   color: white;
 }
-
 .header-content {
   background-color: #7c82ca;
   height: 100px;
 }
-
 .logo {
   margin: 8px;
   width: 80px;
@@ -128,19 +125,16 @@ html {
   border: aliceblue solid 2px;
   float: left;
 }
-
 .bio {
   color: #ffffff;
   font-size: 14px;
   margin-top: -0.1px;
   margin-left: 45px;
 }
-
 .main-content {
-  background: no-repeat url(../back.png);
+  background: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -150,7 +144,6 @@ html {
     width: 100%;
     max-height: 100%;
     height: 100%;
-
     &-item {
       display: flex;
       justify-content: center;
@@ -162,59 +155,52 @@ html {
       margin-bottom: 8px;
       vertical-align: center;
       text-align: center;
-      right:0;
-
-      }
-      .message-human{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
-        margin-left: 175px;
-        border-radius: 30px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-      }
-      .message-bot{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
-        border-radius: 30px;
-        margin-top: 3px;
-        margin-left: 15px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-      }
+      right: 0;
+    }
+    .message-human {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
+      margin-left: 175px;
+      border-radius: 30px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+    }
+    .message-bot {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+      border-radius: 30px;
+      margin-top: 3px;
+      margin-left: 15px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
   }
-
-
+}
 .main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-word;
 }
-
 .main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-word;
 }
-
 .footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
 }
-
 .name-bots {
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
   padding-left: 95px;
 }
-
 .close-bot {
   display: flex;
 }
@@ -222,47 +208,38 @@ html {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style::-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-ms-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-webkit-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-ms-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .Enter-Window {
   display: flex;
   justify-content: center;
 }
-
 .input-button {
   width: 50px;
   height: 50px;
@@ -270,8 +247,7 @@ html {
   margin-top: 15px;
   margin-right: 10px;
 }
-
-.input-style{
+.input-style {
   text-decoration: none;
   resize: none;
   border-radius: 15px;
@@ -285,64 +261,42 @@ html {
   padding-right: 10px;
   overflow: auto;
 }
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style::-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-ms-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-webkit-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-ms-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .Enter-Window {
   display: flex;
   justify-content: center;
 }
-.input-button{
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 24px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
-}
-
 .input-button:hover {
   width: 50px;
   height: 50px;
@@ -355,7 +309,6 @@ html {
   background-size: cover;
   box-shadow: 0px -1px 20px -10px #000000 inset;
 }
-
 .input-button:active {
   width: 50px;
   height: 50px;
@@ -368,7 +321,6 @@ html {
   background-size: cover;
   box-shadow: 0px -1px 20px -1px #000000 inset;
 }
-
 .function_button {
   width: 70px;
   background: #ffffff;
@@ -379,9 +331,7 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
-
 .input-button{
-
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -393,7 +343,6 @@ html {
   background-size: cover;
   cursor: pointer;
 }
-
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -417,19 +366,16 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -5px #000000 inset;
 }
-
 ::-webkit-scrollbar-button {
   //background-image:url('');
   background-repeat:no-repeat;
   width:6px;
   height:0px
 }
-
 ::-webkit-scrollbar-track {
   background-color:#7c82ca;
   box-shadow:0px 0px 3px #7c82ca inset;
 }
-
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -439,14 +385,12 @@ html {
   background-position:center;
   background-repeat:no-repeat;
 }
-
 ::-webkit-resizer{
   //background-image:url('');
   background-repeat:no-repeat;
   width:7px;
   height:0px
 }
-
 ::-webkit-scrollbar{
   width: 11px;
 }
