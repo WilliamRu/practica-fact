@@ -28,7 +28,7 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
 
@@ -366,6 +366,21 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
+
+.input-button{
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  cursor: pointer;
+}
+
 .function_button:hover {
   cursor: pointer;
   width: 70px;
