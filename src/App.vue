@@ -28,8 +28,9 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human'), splitUserMessage(userMessage)"></button>
       </div>
 
     </footer>
@@ -63,8 +64,16 @@ export default {
       }
     },
     clearMessageArea() {
-      this.userMessage = '';
+      this.userMessage = ''
     },
+
+
+    splitUserMessage() {
+      let splitMessage = this.userMessage.split(' ');
+      console.log(splitMessage);
+    },
+
+
   },
 
   computed: {},
@@ -85,7 +94,11 @@ export default {
 
 <style lang="scss">
 html {
+<<<<<<< HEAD
+  font-family: 'Arial';
+=======
   font-family: system-ui,serif;
+>>>>>>> 6c3d4aa6a0de0af27789491e20acda8bcf892d98
 }
 
 .chat-bot {
@@ -365,6 +378,21 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
+
+.input-button{
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  cursor: pointer;
+}
+
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -390,7 +418,7 @@ html {
 }
 
 ::-webkit-scrollbar-button {
-  background-image:url('');
+  //background-image:url('');
   background-repeat:no-repeat;
   width:6px;
   height:0px
@@ -412,7 +440,7 @@ html {
 }
 
 ::-webkit-resizer{
-  background-image:url('');
+  //background-image:url('');
   background-repeat:no-repeat;
   width:7px;
   height:0px
