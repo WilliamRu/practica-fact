@@ -94,11 +94,7 @@ export default {
 
 <style lang="scss">
 html {
-<<<<<<< HEAD
-  font-family: 'Arial';
-=======
   font-family: system-ui,serif;
->>>>>>> 6c3d4aa6a0de0af27789491e20acda8bcf892d98
 }
 
 .chat-bot {
