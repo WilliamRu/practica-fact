@@ -11,7 +11,7 @@
     </header>
     <main class="main-content">
       <div class="main-content__message-area" id="main-content">
-
+        
         <div
             class="main-content__message-area-item"
             v-for="(item, index) in messages" :key="index"
@@ -52,11 +52,13 @@ export default {
       commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
       memesBot: [
-        '/memes/onemem.jpg',
-        '/memes/twomem.jpg',
-        '/memes/four.png',
-        '/memes/15.jpg',
-        '/memes/16.jpg',
+
+          '/memes/onemem.jpg',
+          '/memes/twomem.jpg',
+          '/memes/four.png',
+          '/memes/15.jpg',
+          '/memes/16.jpg',
+
       ],
     };
   },
@@ -76,14 +78,17 @@ export default {
       this.userMessage = ''
     },
     getRandomImage(){
-      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+
+     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     }
   },
-  splitUserMessage() {
-    let splitMessage = this.userMessage.split(' ');
-    console.log(splitMessage);
-  },
+    splitUserMessage() {
+      let splitMessage = this.userMessage.split(' ');
+      console.log(splitMessage);
+    },
+
   computed: {},
+
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
@@ -96,11 +101,13 @@ export default {
     });
   },
 }
+
 </script>
 <style lang="scss">
 html {
   font-family: system-ui,serif;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -157,6 +164,7 @@ html {
       text-align: center;
       right: 0;
     }
+
     .message-human {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
@@ -167,6 +175,7 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
     }
+
     .message-bot {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
@@ -178,6 +187,7 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
+
   }
 }
 .main-content__message-area-message {
@@ -247,6 +257,7 @@ html {
   margin-top: 15px;
   margin-right: 10px;
 }
+
 .input-style {
   text-decoration: none;
   resize: none;
@@ -297,6 +308,7 @@ html {
   display: flex;
   justify-content: center;
 }
+
 .input-button:hover {
   width: 50px;
   height: 50px;
