@@ -28,8 +28,9 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human'), splitUserMessage(userMessage)"></button>
       </div>
 
     </footer>
@@ -64,8 +65,16 @@ export default {
       }
     },
     clearMessageArea() {
-      this.userMessage = '';
+      this.userMessage = ''
     },
+
+
+    splitUserMessage() {
+      let splitMessage = this.userMessage.split(' ');
+      console.log(splitMessage);
+    },
+
+
   },
 
   computed: {},
@@ -86,7 +95,11 @@ export default {
 
 <style lang="scss">
 html {
+<<<<<<< HEAD
+  font-family: 'Arial';
+=======
   font-family: system-ui,serif;
+>>>>>>> 6c3d4aa6a0de0af27789491e20acda8bcf892d98
 }
 
 .chat-bot {
@@ -406,7 +419,7 @@ html {
 }
 
 ::-webkit-scrollbar-button {
-  background-image:url('');
+  //background-image:url('');
   background-repeat:no-repeat;
   width:6px;
   height:0px
@@ -428,7 +441,7 @@ html {
 }
 
 ::-webkit-resizer{
-  background-image:url('');
+  //background-image:url('');
   background-repeat:no-repeat;
   width:7px;
   height:0px
