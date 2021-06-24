@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { chatController } from "./components/MathMassive.js";
+
 export default {
   name: "app",
   data() {
