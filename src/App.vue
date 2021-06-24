@@ -29,8 +29,8 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human'), splitUserMessage(userMessage)"></button>
       </div>
 
     </footer>
@@ -83,6 +83,11 @@ export default {
     },
 
 
+    splitUserMessage() {
+      let splitMessage = this.userMessage.split(' ');
+      console.log(splitMessage);
+    },
+
   },
 
   computed: {},
@@ -105,7 +110,7 @@ export default {
 
 <style lang="scss">
 html {
-  font-family: system-ui;
+  font-family: 'Arial';
 }
 
 .chat-bot {
