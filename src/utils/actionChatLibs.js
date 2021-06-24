@@ -1,8 +1,7 @@
-const sum = (a,b) => a+b;
-const minus = (a,b) => a-b;
+const sum = (arr) => arr.reduce((accum, curr) => +accum + +curr);
+const minus = (arr) => arr.reduce((accum, curr) => +accum - +curr);
 
-
-export default {
+export const mathMethods = {
 	sum,
-	minus,
+	minus
 }
