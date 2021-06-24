@@ -84,10 +84,6 @@ export default {
       let splitMessage = this.userMessage.split(' ');
       console.log(splitMessage);
     },
-
-
-  },
-
   computed: {},
 
   mounted() {
@@ -137,19 +133,16 @@ html {
   border: aliceblue solid 2px;
   float: left;
 }
-
 .bio {
   color: #ffffff;
   font-size: 14px;
   margin-top: -0.1px;
   margin-left: 45px;
 }
-
 .main-content {
-  background-: no-repeat url(../back.png);
+  background: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -172,34 +165,32 @@ html {
       vertical-align: center;
       text-align: center;
       right: 0;
-      }
-      .message-human{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
-        margin-left: 175px;
-        border-radius: 30px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-      }
-      .message-bot{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
-        border-radius: 30px;
-        margin-top: 3px;
-        margin-left: 15px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-      }
+    }
+
+    .message-human {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
+      margin-left: 175px;
+      border-radius: 30px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+    }
+
+    .message-bot {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+      border-radius: 30px;
+      margin-top: 3px;
+      margin-left: 15px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
   }
 }
-
-
-
 .main-content__message-area-message {
   height: auto;
   width: 90%;
@@ -339,19 +330,6 @@ html {
 .Enter-Window {
   display: flex;
   justify-content: center;
-}
-
-.input-button{
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 24px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
 }
 
 .input-button:hover {
