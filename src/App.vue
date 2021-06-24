@@ -84,10 +84,6 @@ export default {
       let splitMessage = this.userMessage.split(' ');
       console.log(splitMessage);
     },
-
-
-  },
-
   computed: {},
 
   mounted() {
