@@ -48,8 +48,7 @@ export default {
       messages: [],
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот"]
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
   methods:{
@@ -59,7 +58,7 @@ export default {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
-      if(this.helloMessage.indexOf(message) !== -1) {
+      if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
         this.addMessages(this.blockBot, 'bot');
       }
     },
