@@ -346,8 +346,6 @@ html {
   justify-content: center;
 }
 
-
-
 .input-button{
 
   width: 50px;
@@ -401,21 +399,7 @@ html {
 .function_button:hover{
   cursor: pointer;
 }
-.input-button{
 
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 30px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
-  cursor: pointer;
-}
-
-}
 .function_button:hover {
   width: 70px;
   background: #ffffff;
@@ -438,4 +422,38 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -5px #000000 inset;
 }
+//////////////
+::-webkit-scrollbar-button {
+  background-image:url('');
+  background-repeat:no-repeat;
+  width:6px;
+  height:0px
+}
+
+::-webkit-scrollbar-track {
+  background-color:#7c82ca;
+  box-shadow:0px 0px 3px #7c82ca inset;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #5ec66d;
+  box-shadow:0px 1px 1px #7c82ca inset;
+  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+::-webkit-resizer{
+  background-image:url('');
+  background-repeat:no-repeat;
+  width:7px;
+  height:0px
+}
+
+::-webkit-scrollbar{
+  width: 11px;
+}
+
 </style>
