@@ -31,9 +31,11 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+
+        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human'), splitUserMessage(userMessage)"></button>
       </div>
+
     </footer>
   </div>
 </template>
@@ -60,14 +62,15 @@ export default {
   },
   methods: {
     addMessages(message, type) {
+
       if (!!message) {
         this.messages.push({message, type});
       }
       if(type !== 'bot-image') {
         this.clearMessageArea();
       }
-      if (message === 'Привет') {
-        this.addMessages(this.blockBot, 'bot')
+      if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
+        this.addMessages(this.blockBot, 'bot');
       }
     },
     clearMessageArea() {
@@ -77,11 +80,21 @@ export default {
      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     }
   },
+    splitUserMessage() {
+      let splitMessage = this.userMessage.split(' ');
+      console.log(splitMessage);
+    },
+
+
+  },
+
+  computed: {},
+
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
         e.target.style.height = '1px';
-        e.target.style.height = e.target.scrollHeight + 30 + "px";
+        e.target.style.height = e.target.scrollHeight + 10 + "px";
       }
 
       if (e.target.value.length == 0) {
@@ -91,12 +104,10 @@ export default {
   },
 }
 
-
 </script>
 <style lang="scss">
 html {
-
-  font-family: system-ui;
+  font-family: system-ui,serif;
 }
 
 
@@ -119,7 +130,7 @@ html {
 }
 
 .logo {
-  margin: 10px;
+  margin: 8px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -161,38 +172,44 @@ html {
       vertical-align: center;
       text-align: center;
       right: 0;
-
-    }
-
-    .message-human {
-      color: rgba(245, 245, 245, 1);
-      background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
-      margin-left: 175px;
-      border-radius: 30px;
-      padding: 0.5rem 0.75rem;
-      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-    }
-
-    .message-bot {
-      color: rgba(245, 245, 245, 1);
-      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
-      border-radius: 30px;
-      margin-left: 15px;
-      padding: 0.5rem 0.75rem;
-      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      }
+      .message-human{
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
+        margin-left: 175px;
+        border-radius: 30px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      }
+      .message-bot{
+        color: rgba(245, 245, 245, 1);
+        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+        border-radius: 30px;
+        margin-top: 3px;
+        margin-left: 15px;
+        padding: 0.5rem 0.75rem;
+        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      }
     }
   }
 }
 
 
+
 .main-content__message-area-message {
   height: auto;
   width: 90%;
-  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.main-content__message-area-message {
+  height: auto;
+  width: 90%;
+  word-break: break-word;
 }
 
 .footer-content {
@@ -211,25 +228,6 @@ html {
 .close-bot {
   display: flex;
 }
-
-.input-style {
-  text-decoration: none;
-  resize: none;
-  border-radius: 15px;
-  width: 300px;
-  height: 25px;
-  margin-top: 28px;
-  outline: none;
-  padding-left: 15px;
-  padding-top: 10px;
-  padding-right: 10px;
-  overflow: auto;
-}
-.message-bot-img{
-  width: 50px;
-  height: 50px;
-}
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -289,7 +287,7 @@ html {
   border-radius: 15px;
   width: 300px;
   height: 25px;
-  margin-top: 38px;
+  margin-top: 30px;
   margin-bottom: 15px;
   outline: none;
   padding-left: 15px;
@@ -343,21 +341,57 @@ html {
   justify-content: center;
 }
 
+.input-button{
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 24px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+}
+
+.input-button:hover {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 24px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  box-shadow: 0px -1px 20px -10px #000000 inset;
+}
+
+.input-button:active {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 24px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  box-shadow: 0px -1px 20px -1px #000000 inset;
+}
+
 .function_button {
   width: 70px;
-  background: #7c82ca;
-  color: white;
+  background: #ffffff;
+  color: #000000;
+  margin-top: 5px;
   margin-left: 30px;
-  margin-bottom: 5px;
+  font-weight: bold;
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
 
-.function_button:hover {
-  cursor: pointer;
-}
-
-.input-button {
+.input-button{
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -369,8 +403,60 @@ html {
   background-size: cover;
   cursor: pointer;
 }
+.function_button:hover {
+  cursor: pointer;
+  width: 70px;
+  background: #ffffff;
+  color: #000000;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+  box-shadow: 0px -1px 20px -10px #000000 inset;
+}
+.function_button:active {
+  width: 70px;
+  background: #ffffff;
+  color: #000000;
+  margin-left: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: aliceblue solid 2px;
+  box-shadow: 0px -1px 20px -5px #000000 inset;
+}
 
-.input-button:hover {
-  border: 1px solid #5e5c5c;
+::-webkit-scrollbar-button {
+  //background-image:url('');
+  background-repeat:no-repeat;
+  width:6px;
+  height:0px
+}
+
+::-webkit-scrollbar-track {
+  background-color:#7c82ca;
+  box-shadow:0px 0px 3px #7c82ca inset;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #5ec66d;
+  box-shadow:0px 1px 1px #7c82ca inset;
+  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+::-webkit-resizer{
+  //background-image:url('');
+  background-repeat:no-repeat;
+  width:7px;
+  height:0px
+}
+
+::-webkit-scrollbar{
+  width: 11px;
 }
 </style>
