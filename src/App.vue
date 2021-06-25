@@ -49,7 +49,7 @@ import {mathActions} from "./components/MathActions.js";
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
-let valueHello = 0;
+let messageHello = true;
 export default {
   name: "app",
   data() {
@@ -77,14 +77,13 @@ export default {
         this.addMessages(commandsBot, 'bot');
       }
       if (hiRegExp.test(message) && type === 'human') {
-        if (valueHello<1) {
-          valueHello +=1;
+        if (messageHello === true) {
+          messageHello = false;
           this.addMessages(blockBot, 'bot');
         }
       }
       if (type === 'human') {
         let splitMessage = message.split(' ');
-        console.log(splitMessage);
         this.MathCalculate(splitMessage);
       }
       if (type !== 'bot-image') {
@@ -109,8 +108,7 @@ export default {
     },
     getObjByTargetWord(wordArr, targetArr) {
       const length = targetArr.length;
-      let i = 0;
-      for (i; i < length; i++) {
+      for (let i = 0; i < length; i++) {
         const crossArr = targetArr[i].arrayMatchWords.filter(i => wordArr.includes(i));
         if (crossArr.length) {
           return targetArr[i];
