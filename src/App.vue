@@ -32,7 +32,7 @@
     <footer class="footer-content">
       <div class="Enter-Window">
 
-        <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
 
@@ -69,7 +69,7 @@ export default {
         this.messages.push({message, type});
       }
       if(type == 'human'){
-        let splitMessage = this.userMessage.split(' ');
+        let splitMessage = message.split(' ');
         console.log(splitMessage);
       }
       if(type !== 'bot-image') {
