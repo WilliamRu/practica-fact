@@ -1,82 +1,85 @@
 <template>
+  <div id="bot">
+    <button v-on:click="visible=!visible" class="buttonOpen">{{ visible ? 'x' : '' }}</button>
+    <div class="chat-bot" v-show="visible">
+      <header class="header-content">
+        <span class="close-bot"></span>
+        <img class="logo" src="../one.png" alt="Логотип">
+        <span class="name-bots">Frog-Bot</span>
+        <p class="bio">NO HORNY.</p>
+        <p class="bio">only memes! & math</p>
+      </header>
+      <main class="main-content">
+        <div class="main-content__message-area" id="main-content">
 
-  <div id="bot" class="chat-bot">
-
-    <header class="header-content">
-      <span class="close-bot"></span>
-      <img class="logo" src="../one.png" alt="Логотип">
-      <span class="name-bots">Frog-Bot</span>
-      <p class="bio">NO HORNY.</p>
-      <p class="bio">only memes! & math</p>
-    </header>
-    <main class="main-content">
-      <div class="main-content__message-area" id="main-content">
-        
-        <div
-            class="main-content__message-area-item"
-            v-for="(item, index) in messages" :key="index"
-            :class="[
+          <div
+              class="main-content__message-area-item"
+              v-for="(item, index) in messages" :key="index"
+              :class="[
                 {'message-bot': item.type === 'bot'},
                 {'message-human': item.type === 'human'},
                 {'message-bot message-img-bot': item.type === 'bot-image'}
             ]"
-        >
-          <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="150px" height="150px">
-          <div class="main-content__message-area-message" v-text="item.message" v-else/>
+          >
+            <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="150px" height="150px">
+            <div class="main-content__message-area-message" v-text="item.message" v-else/>
+          </div>
         </div>
-      </div>
-      <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
-      <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
-    </main>
+        <button class="function_button help" @click="addMessages('', 'help')">/help</button>
+        <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
+      </main>
 
-    <footer class="footer-content">
-      <div class="Enter-Window">
-
-        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+      <footer class="footer-content">
+        <div class="Enter-Window">
+          <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-
-    </footer>
+      </footer>
+    </div>
   </div>
 </template>
 
 <script>
-import { chatController } from "./components/MathMassive.js";
+import {chatController} from "./components/MathMassive.js";
 
+const hiRegExp = new RegExp(/привет/gi);
+const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
+const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ';
 export default {
   name: "app",
   data() {
     return {
+      visible: true,
       imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
       memesBot: [
-          '/memes/onemem.jpg',
-          '/memes/twomem.jpg',
-          '/memes/four.png',
-          '/memes/15.jpg',
-          '/memes/16.jpg',
+        '/memes/onemem.jpg',
+        '/memes/twomem.jpg',
+        '/memes/four.png',
+        '/memes/15.jpg',
+        '/memes/16.jpg',
       ],
     };
   },
   methods: {
     addMessages(message, type) {
-
       if (!!message) {
         this.messages.push({message, type});
       }
-      if(type == 'human'){
+      if (type === 'help') {
+        this.addMessages(commandsBot, 'bot');
+      }
+      if (hiRegExp.test(message) && type === 'human') {
+        this.addMessages(blockBot, 'bot');
+      }
+      if (type === 'human') {
         let splitMessage = message.split(' ');
         console.log(splitMessage);
       }
-      if(type !== 'bot-image') {
+      if (type !== 'bot-image') {
         this.clearMessageArea();
-      }
-      if(message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
-        this.addMessages(this.blockBot, 'bot');
       }
     },
     clearMessageArea() {
@@ -106,9 +109,18 @@ export default {
 </script>
 <style lang="scss">
 html {
-  font-family: system-ui,serif;
+  font-family: system-ui, serif;
 }
 
+.buttonOpen {
+  background: url("../one.png");
+  background-size: contain;
+  margin: 8px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: black solid 2px;
+}
 
 .chat-bot {
   /*background-color: #7c82ca;*/
@@ -136,16 +148,19 @@ html {
   border: aliceblue solid 2px;
   float: left;
 }
+
 .bio {
   color: #ffffff;
   font-size: 14px;
   margin-top: -0.1px;
   margin-left: 45px;
 }
+
 .main-content {
   background: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
+
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -194,6 +209,7 @@ html {
     }
   }
 }
+
 .main-content__message-area-message {
   height: auto;
   width: 90%;
@@ -222,6 +238,7 @@ html {
 .close-bot {
   display: flex;
 }
+
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -372,7 +389,7 @@ html {
   border: aliceblue solid 2px;
 }
 
-.input-button{
+.input-button {
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -384,6 +401,7 @@ html {
   background-size: cover;
   cursor: pointer;
 }
+
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -396,6 +414,7 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -10px #000000 inset;
 }
+
 .function_button:active {
   width: 70px;
   background: #ffffff;
@@ -410,34 +429,34 @@ html {
 
 ::-webkit-scrollbar-button {
   //background-image:url('');
-  background-repeat:no-repeat;
-  width:6px;
-  height:0px
+  background-repeat: no-repeat;
+  width: 6px;
+  height: 0px
 }
 
 ::-webkit-scrollbar-track {
-  background-color:#7c82ca;
-  box-shadow:0px 0px 3px #7c82ca inset;
+  background-color: #7c82ca;
+  box-shadow: 0px 0px 3px #7c82ca inset;
 }
 
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #5ec66d;
-  box-shadow:0px 1px 1px #7c82ca inset;
-  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
-  background-position:center;
-  background-repeat:no-repeat;
+  box-shadow: 0px 1px 1px #7c82ca inset;
+  background-image: url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-::-webkit-resizer{
+::-webkit-resizer {
   //background-image:url('');
-  background-repeat:no-repeat;
-  width:7px;
-  height:0px
+  background-repeat: no-repeat;
+  width: 7px;
+  height: 0px
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 11px;
 }
 </style>
