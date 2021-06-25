@@ -28,7 +28,7 @@
 
     <footer class="footer-content">
       <div class="Enter-Window">
-        <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
 
@@ -49,39 +49,27 @@ export default {
       botMessage: [],
       commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот"]
+      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот","Hi","Hi\n"]
     };
   },
-  methods:{
+  methods: {
     addMessages(message, type) {
-
-      if (!!message) {
+      if (message.trim()) {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
-      if(this.helloMessage.indexOf(message) !== -1) {
+      if (this.helloMessage.indexOf(message) !== -1) {
         this.addMessages(this.blockBot, 'bot');
       }
     },
     clearMessageArea() {
-      this.userMessage = '';
+      this.userMessage = null;
     },
   },
-
   computed: {},
   mounted() {
-    document.querySelector('textarea').addEventListener('input', function (e) {
-      if (e.target.style.height <= 100 || e.target.value.length <= 100) {
-        e.target.style.height = '1px';
-        e.target.style.height = e.target.scrollHeight + 10 + "px";
-      }
-
-      if (e.target.value.length == 0) {
-        e.target.style.height = '25px';
-      }
-    });
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -259,18 +247,18 @@ html {
 }
 
 .input-style{
+  display: block;
   text-decoration: none;
+  width: 300px;
+  height: 35px;
   resize: none;
   border-radius: 15px;
-  width: 300px;
-  height: 25px;
-  margin-top: 30px;
-  margin-bottom: 15px;
   outline: none;
   padding-left: 15px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-right: 10px;
-  overflow: auto;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
 .input-style::-webkit-input-placeholder {
@@ -367,20 +355,6 @@ html {
   border: aliceblue solid 2px;
 }
 
-.input-button{
-
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 30px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
-  cursor: pointer;
-}
-
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -406,32 +380,30 @@ html {
 }
 
 ::-webkit-scrollbar-button {
-  background-image:url('');
   background-repeat:no-repeat;
   width:6px;
-  height:0px
+  height:0;
 }
 
 ::-webkit-scrollbar-track {
   background-color:#7c82ca;
-  box-shadow:0px 0px 3px #7c82ca inset;
+  box-shadow:0 0 3px #7c82ca inset;
 }
 
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #5ec66d;
-  box-shadow:0px 1px 1px #7c82ca inset;
+  box-shadow:0 1px 1px #7c82ca inset;
   background-image:url('https://yraaa.ru/_pu/24/59610063.png');
   background-position:center;
   background-repeat:no-repeat;
 }
 
 ::-webkit-resizer{
-  background-image:url('');
   background-repeat:no-repeat;
   width:7px;
-  height:0px
+  height:0;
 }
 
 ::-webkit-scrollbar{
