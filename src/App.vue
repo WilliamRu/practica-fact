@@ -83,7 +83,6 @@ export default {
         let splitMessage = message.split(' ');
         console.log(splitMessage);
         this.MathCalculate(splitMessage);
-
       }
       if (type !== 'bot-image') {
         this.clearMessageArea();
@@ -116,24 +115,7 @@ export default {
       }
       return null;
     },
-    sum(arr) {
-      const reducer = (accumulator, currentValue) => +accumulator + +currentValue;
-      return arr.reduce(reducer);
-    },
-    minus(arr) {
-      const reducer = (accumulator, currentValue) => +accumulator - +currentValue;
-      return arr.reduce(reducer);
-    },
-    mul(arr) {
-      const reducer = (accumulator, currentValue) => +accumulator * +currentValue;
-      return arr.reduce(reducer);
-    },
-    division(arr) {
-      const reducer = (accumulator, currentValue) => +accumulator / +currentValue;
-      return arr.reduce(reducer);
-    },
   },
-
   computed: {},
 
   mounted() {
@@ -142,7 +124,6 @@ export default {
         e.target.style.height = '1px';
         e.target.style.height = e.target.scrollHeight + 10 + "px";
       }
-
       if (e.target.value.length == 0) {
         e.target.style.height = '25px';
       }
