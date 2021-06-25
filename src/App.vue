@@ -65,6 +65,7 @@ export default {
         '/memes/15.jpg',
         '/memes/16.jpg',
       ],
+      numbers: [3,4,56,7,8,93,2]
     };
   },
   methods: {
