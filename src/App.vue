@@ -1,13 +1,15 @@
 <template>
   <div id="bot">
-    <button v-on:click="visible=!visible" class="buttonOpen">{{ visible ? 'x' : '' }}</button>
-    <div class="chat-bot" v-show="visible">
+    <button class="buttonOpen" id="buttonOpen" v-show="!visible" v-on:click="visible=!visible"></button>
+    <transition name="fade">
+    <div class="chat-bot" v-show="visible" id="chat-bot">
       <header class="header-content">
         <span class="close-bot"></span>
         <img class="logo" src="../one.png" alt="Логотип">
         <span class="name-bots">Frog-Bot</span>
         <p class="bio">NO HORNY.</p>
         <p class="bio">only memes! & math</p>
+        <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">{{ visible ? 'x' : '' }}</button>
       </header>
       <main class="main-content">
         <div class="main-content__message-area" id="main-content">
@@ -36,6 +38,7 @@
       </div>
       </footer>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -62,7 +65,7 @@ export default {
         '/memes/four.png',
         '/memes/15.jpg',
         '/memes/16.jpg',
-      ],
+      ]
     };
   },
   methods: {
@@ -128,6 +131,12 @@ export default {
         e.target.style.height = '25px';
       }
     });
+    let blockBot = document.getElementById('chat-bot');
+    let buttonOpen = document.getElementById('buttonOpen');
+    buttonOpen.style.display='none';
+    if (blockBot.style.display == 'none') {
+      buttonOpen.style.display = 'inline-block';
+    }
   },
 }
 
@@ -136,17 +145,42 @@ export default {
 html {
   font-family: system-ui, serif;
 }
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
 .buttonOpen {
   background: url("../one.png");
-  background-size: contain;
+  background-size: cover;
   margin: 8px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: black solid 2px;
+  border: black solid 1px;
+  position: absolute;
+  bottom:0;
+  right:0;
 }
-
+.buttonOpen:hover {
+  cursor: pointer;
+}
+.buttonClose {
+  background: #42b8a1;
+  margin: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: white solid 1px;
+  position: absolute;
+  top:0;
+  right:0;
+  color: white;
+}
+.buttonClose:hover {
+  cursor:pointer;
+}
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -163,6 +197,7 @@ html {
 .header-content {
   background-color: #7c82ca;
   height: 100px;
+  position: relative;
 }
 
 .logo {
