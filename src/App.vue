@@ -40,11 +40,13 @@
 </template>
 
 <script>
-import {chatController} from "./components/MathMassive.js";
+import {chatController} from "./components/ChatController.js";
+import {mathActions} from "./components/MathActions.js";
 
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
-const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ';
+const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
+let valueHello = 0;
 export default {
   name: "app",
   data() {
@@ -72,11 +74,16 @@ export default {
         this.addMessages(commandsBot, 'bot');
       }
       if (hiRegExp.test(message) && type === 'human') {
-        this.addMessages(blockBot, 'bot');
+        if (valueHello<1) {
+          valueHello +=1;
+          this.addMessages(blockBot, 'bot');
+        }
       }
       if (type === 'human') {
         let splitMessage = message.split(' ');
         console.log(splitMessage);
+        this.MathCalculate(splitMessage);
+
       }
       if (type !== 'bot-image') {
         this.clearMessageArea();
@@ -87,7 +94,44 @@ export default {
     },
     getRandomImage(){
      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
-    }
+    },
+    MathCalculate(splitMessage) {
+      let result = null;
+      const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
+      if (!!currActionObj) {
+        const methodParams = splitMessage.filter(currActionObj.conditionFunc);
+        result = mathActions[currActionObj.actionMethod](methodParams);
+      }
+      this.addMessages(result, "bot");
+      return result
+    },
+    getObjByTargetWord(wordArr, targetArr) {
+      const length = targetArr.length;
+      let i = 0;
+      for (i; i < length; i++) {
+        const crossArr = targetArr[i].arrayMatchWords.filter(i => wordArr.includes(i));
+        if (crossArr.length) {
+          return targetArr[i];
+        }
+      }
+      return null;
+    },
+    sum(arr) {
+      const reducer = (accumulator, currentValue) => +accumulator + +currentValue;
+      return arr.reduce(reducer);
+    },
+    minus(arr) {
+      const reducer = (accumulator, currentValue) => +accumulator - +currentValue;
+      return arr.reduce(reducer);
+    },
+    mul(arr) {
+      const reducer = (accumulator, currentValue) => +accumulator * +currentValue;
+      return arr.reduce(reducer);
+    },
+    division(arr) {
+      const reducer = (accumulator, currentValue) => +accumulator / +currentValue;
+      return arr.reduce(reducer);
+    },
   },
 
   computed: {},
