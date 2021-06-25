@@ -31,15 +31,11 @@
 
       <footer class="footer-content">
         <div class="Enter-Window">
-
-          <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage"
-                    @keyup.enter="addMessages(userMessage, 'human')"></textarea>
-          <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
-        </div>
-
+          <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+      </div>
       </footer>
     </div>
-
   </div>
 </template>
 
@@ -89,9 +85,9 @@ export default {
     clearMessageArea() {
       this.userMessage = ''
     },
-    getRandomImage() {
-      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
-    },
+    getRandomImage(){
+     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    }
   },
 
   computed: {},
