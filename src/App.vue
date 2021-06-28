@@ -2,42 +2,49 @@
   <div id="bot">
     <button class="buttonOpen" id="buttonOpen" v-show="!visible" v-on:click="visible=!visible"></button>
     <transition name="fade">
-    <div class="chat-bot" v-show="visible" id="chat-bot">
-      <header class="header-content">
-        <span class="close-bot"></span>
-        <img class="logo" src="../one.png" alt="Логотип">
-        <span class="name-bots">Frog-Bot</span>
-        <p class="bio">NO HORNY.</p>
-        <p class="bio">only memes! & math</p>
-        <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">{{ visible ? 'x' : '' }}</button>
-      </header>
-      <main class="main-content">
-        <div class="main-content__message-area" id="main-content">
+      <div class="chat-bot" v-show="visible" id="chat-bot">
+        <header class="header-content">
+          <span class="close-bot"></span>
+          <img class="logo" src="../one.png" alt="Логотип">
+          <span class="name-bots">Frog-Bot</span>
+          <p class="bio">NO HORNY.</p>
+          <p class="bio">only memes! & math</p>
+          <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 212.982 212.982" style="enable-background:new 0 0 212.982 212.982;" xml:space="preserve">
+            <g id="Close">
+              <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312   c-6.99-6.99-18.322-6.99-25.312,0l-75.937,75.937L30.554,5.242c-6.99-6.99-18.322-6.99-25.312,0c-6.989,6.99-6.989,18.323,0,25.312   l75.937,75.936L5.242,182.427c-6.989,6.99-6.989,18.323,0,25.312c6.99,6.99,18.322,6.99,25.312,0l75.937-75.937l75.937,75.937   c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
+            </g>
+            </svg>
+          </button>
+        </header>
+        <main class="main-content">
+          <div class="main-content__message-area" id="main-content">
 
-          <div
-              class="main-content__message-area-item"
-              v-for="(item, index) in messages" :key="index"
-              :class="[
+            <div
+                class="main-content__message-area-item"
+                v-for="(item, index) in messages" :key="index"
+                :class="[
                 {'message-bot': item.type === 'bot'},
                 {'message-human': item.type === 'human'},
                 {'message-bot message-img-bot': item.type === 'bot-image'}
             ]"
-          >
-            <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="380px" height="380px">
-            <div class="main-content__message-area-message" v-text="item.message" v-else/>
+            >
+              <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="380px" height="380px">
+              <div class="main-content__message-area-message" v-text="item.message" v-else/>
+            </div>
           </div>
-        </div>
-        <button class="function_button help" @click="addMessages('', 'help')">/help</button>
-        <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
-      </main>
+          <button class="function_button help" @click="addMessages('', 'help')">/help</button>
+          <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
+        </main>
 
-      <footer class="footer-content">
-        <div class="Enter-Window">
-          <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+        <footer class="footer-content">
+          <div class="Enter-Window">
+            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение"
+                      v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
+            <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
+          </div>
+        </footer>
       </div>
-      </footer>
-    </div>
     </transition>
   </div>
 </template>
@@ -48,13 +55,14 @@ import {mathActions} from "./components/MathActions.js";
 
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
+const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
 export default {
   name: "app",
   data() {
     return {
-      visible: true,
+      visible: false,
       imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
@@ -85,7 +93,7 @@ export default {
   },
   methods: {
     addMessages(message, type) {
-      if (message.trim() ||!!message || message === 0) {
+      if (!!message || message === 0) {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
@@ -110,8 +118,8 @@ export default {
     clearMessageArea() {
       this.userMessage = null;
     },
-    getRandomImage(){
-     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    getRandomImage() {
+      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     },
     mathCalculate(splitMessage) {
       let result = null;
@@ -134,18 +142,9 @@ export default {
       }
       return null;
     },
-
   },
-  computed: {},
 
-  mounted() {
-    let blockBot = document.getElementById('chat-bot');
-    let buttonOpen = document.getElementById('buttonOpen');
-    buttonOpen.style.display='none';
-    if (blockBot.style.display === 'none') {
-      buttonOpen.style.display = 'inline-block';
-    }
-  },
+  computed: {}
 };
 </script>
 
@@ -153,12 +152,16 @@ export default {
 html {
   font-family: system-ui, serif;
 }
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
+{
   opacity: 0;
 }
+
 .buttonOpen {
   background: url("../one.png");
   background-size: cover;
@@ -168,27 +171,30 @@ html {
   border-radius: 50%;
   border: black solid 1px;
   position: absolute;
-  bottom:0;
-  right:0;
+  bottom: 0;
+  right: 0;
 }
+
 .buttonOpen:hover {
   cursor: pointer;
 }
+
 .buttonClose {
   background: #42b8a1;
   margin: 8px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: white solid 1px;
+  border: black solid 1px;
   position: absolute;
-  top:0;
-  right:0;
-  color: white;
+  top: 0;
+  right: 0;
 }
+
 .buttonClose:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -275,7 +281,8 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
-    .message-img-bot{
+
+    .message-img-bot {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
       border-radius: 30px;
