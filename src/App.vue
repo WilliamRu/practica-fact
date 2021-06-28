@@ -1,13 +1,15 @@
 <template>
   <div id="bot">
-    <button v-on:click="visible=!visible" class="buttonOpen">{{ visible ? 'x' : '' }}</button>
-    <div class="chat-bot" v-show="visible">
+    <button class="buttonOpen" id="buttonOpen" v-show="!visible" v-on:click="visible=!visible"></button>
+    <transition name="fade">
+    <div class="chat-bot" v-show="visible" id="chat-bot">
       <header class="header-content">
         <span class="close-bot"></span>
         <img class="logo" src="../one.png" alt="Логотип">
         <span class="name-bots">Frog-Bot</span>
         <p class="bio">NO HORNY.</p>
         <p class="bio">only memes! & math</p>
+        <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">{{ visible ? 'x' : '' }}</button>
       </header>
       <main class="main-content">
         <div class="main-content__message-area" id="main-content">
@@ -31,11 +33,12 @@
 
       <footer class="footer-content">
         <div class="Enter-Window">
-          <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyEnter="addMessages(userMessage, 'human')"></textarea>
+          <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
       </footer>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -46,7 +49,7 @@ import {mathActions} from "./components/MathActions.js";
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
-let valueHello = 0;
+let messageHello = true;
 export default {
   name: "app",
   data() {
@@ -90,14 +93,13 @@ export default {
         this.addMessages(commandsBot, 'bot');
       }
       if (hiRegExp.test(message) && type === 'human') {
-        if (valueHello<1) {
-          valueHello +=1;
+        if (messageHello === true) {
+          messageHello = false;
           this.addMessages(blockBot, 'bot');
         }
       }
       if (type === 'human') {
         let splitMessage = message.split(' ');
-        console.log(splitMessage);
         this.MathCalculate(splitMessage);
       }
       if (type !== 'bot-image') {
@@ -122,8 +124,7 @@ export default {
     },
     getObjByTargetWord(wordArr, targetArr) {
       const length = targetArr.length;
-      let i = 0;
-      for (i; i < length; i++) {
+      for (let i = 0; i < length; i++) {
         const crossArr = targetArr[i].arrayMatchWords.filter(i => wordArr.includes(i));
         if (crossArr.length) {
           return targetArr[i];
@@ -135,6 +136,12 @@ export default {
   computed: {},
 
   mounted() {
+    let blockBot = document.getElementById('chat-bot');
+    let buttonOpen = document.getElementById('buttonOpen');
+    buttonOpen.style.display='none';
+    if (blockBot.style.display === 'none') {
+      buttonOpen.style.display = 'inline-block';
+    }
   },
 };
 </script>
@@ -143,17 +150,42 @@ export default {
 html {
   font-family: system-ui, serif;
 }
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
 .buttonOpen {
   background: url("../one.png");
-  background-size: contain;
+  background-size: cover;
   margin: 8px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: black solid 2px;
+  border: black solid 1px;
+  position: absolute;
+  bottom:0;
+  right:0;
 }
-
+.buttonOpen:hover {
+  cursor: pointer;
+}
+.buttonClose {
+  background: #42b8a1;
+  margin: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: white solid 1px;
+  position: absolute;
+  top:0;
+  right:0;
+  color: white;
+}
+.buttonClose:hover {
+  cursor:pointer;
+}
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -170,6 +202,7 @@ html {
 .header-content {
   background-color: #7c82ca;
   height: 100px;
+  position: relative;
 }
 
 .logo {
@@ -402,7 +435,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 24px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
@@ -415,7 +448,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 24px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
@@ -439,7 +472,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 30px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
