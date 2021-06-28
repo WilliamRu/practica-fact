@@ -1,17 +1,25 @@
 <template>
-
   <div id="bot" class="chat-bot">
-
     <header class="header-content">
       <span class="close-bot"></span>
       <img class="logo" src="../one.png" alt="Логотип">
       <span class="name-bots">Frog-Bot</span>
       <p class="bio">NO HORNY.</p>
       <p class="bio">only memes! & math</p>
+      <button
+          type="button"
+          class="btn-modal"
+          @click="showModal"
+      >
+        Open Modal!
+      </button>
+      <modal
+          v-show="isModalVisible"
+          @close="closeModal"
+      />
     </header>
-    <main class="main-content">
+    <main class="main-content" >
       <div class="main-content__message-area" id="main-content">
-        
         <div
             class="main-content__message-area-item"
             v-for="(item, index) in messages" :key="index"
@@ -28,64 +36,74 @@
       <button class="function_button help" @click="addMessages(commandsBot, 'bot')">/help</button>
       <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
     </main>
-
     <footer class="footer-content">
       <div class="Enter-Window">
 
         <textarea class="input-style" maxlength="1500" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
-        <button class="input-button" type="button" @click="addMessages(userMessage, 'human'), splitUserMessage(userMessage)"></button>
+        <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-
     </footer>
   </div>
 </template>
-
 <script>
+import {memesBot} from "./utils/MassMems.js";
+import Modal from "./components/Modal.vue";
 export default {
+  components:{
+    memesBot,
+    Modal,
+  },
   name: "app",
   data() {
     return {
+      giveFetch: null,
+      isModalVisible: false,
       imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
       commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
       blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      memesBot: [
-        '/memes/onemem.jpg',
-        '/memes/twomem.jpg',
-        '/memes/four.png',
-        '/memes/15.jpg',
-        '/memes/16.jpg',
-      ],
     };
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     addMessages(message, type) {
-
       if (!!message) {
         this.messages.push({message, type});
       }
       if (type !== 'bot-image') {
-        this.clearMessageArea();
-      }
-      if (message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
-        this.addMessages(this.blockBot, 'bot');
+        if (type == 'human') {
+          let splitMessage = this.userMessage.split(' ');
+          console.log(splitMessage);
+        }
+        if (type !== 'bot-image') {
+          this.clearMessageArea()
+        }
+
+        if (message == message.match(/привет/gi) || message == message.match(/привет\n/gi)) {
+          this.addMessages(this.blockBot, 'bot');
+        }
       }
     },
-    clearMessageArea() {
-      this.userMessage = ''
+    clearMessageArea(){
+      this.userMessage = '';
     },
-    getRandomImage() {
+    getRandomImage(){
       return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
-    }
-  },
+    },
     splitUserMessage() {
-      let splitMessage = this..split(' ');
+      let splitMessage = this.split(' ');
       console.log(splitMessage);
     },
-  computed: {},
 
+
+  },
   mounted() {
     document.querySelector('textarea').addEventListener('input', function (e) {
       if (e.target.style.height <= 100 || e.target.value.length <= 100) {
@@ -97,9 +115,9 @@ export default {
         e.target.style.height = '25px';
       }
     });
-  }
-}
 
+  },
+}
 </script>
 <style lang="scss">
 html {
@@ -131,6 +149,18 @@ html {
   border-radius: 50%;
   border: aliceblue solid 2px;
   float: left;
+}
+.btn-modal {
+  color: white;
+  background: blue;
+  border: 1px solid #4aae9b;
+  border-radius: 10px;
+  margin-left: 240px;
+  font-size: 12pt;
+  position: absolute;
+  top: 50px;
+
+
 }
 .bio {
   color: #ffffff;
