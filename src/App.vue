@@ -1,55 +1,83 @@
 <template>
+  <div id="bot">
+    <button v-on:click="visible=!visible" class="buttonOpen">{{ visible ? 'x' : '' }}</button>
+    <div class="chat-bot" v-show="visible">
+      <header class="header-content">
+        <span class="close-bot"></span>
+        <img class="logo" src="../one.png" alt="Логотип">
+        <span class="name-bots">Frog-Bot</span>
+        <p class="bio">NO HORNY.</p>
+        <p class="bio">only memes! & math</p>
+      </header>
+      <main class="main-content">
+        <div class="main-content__message-area" id="main-content">
 
-	<div id="bot" class="chat-bot">
-
-    <header class="header-content">
-      <span class="close-bot"></span>
-      <img class="logo" src="../one.png" alt="Логотип">
-      <span class="name-bots">Frog-Bot</span>
-      <p class="bio">NO HORNY.</p>
-      <p class="bio">only memes! & math</p>
-    </header>
-
-    <main class="main-content">
-      <div class="main-content__message-area" id="main-content">
-
-        <div
-            class="main-content__message-area-item"
-            v-for="(item, index) in messages" :key="index"
-            :class="[{'message-bot': item.type === 'bot'},{'message-human': item.type === 'human'}]">
-          <div class="main-content__message-area-message" v-text="item.message"/>
-
+          <div
+              class="main-content__message-area-item"
+              v-for="(item, index) in messages" :key="index"
+              :class="[
+                {'message-bot': item.type === 'bot'},
+                {'message-human': item.type === 'human'},
+                {'message-bot message-img-bot': item.type === 'bot-image'}
+            ]"
+          >
+            <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="380px" height="380px">
+            <div class="main-content__message-area-message" v-text="item.message" v-else/>
+          </div>
         </div>
-      </div>
+        <button class="function_button help" @click="addMessages('', 'help')">/help</button>
+        <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
+      </main>
 
-      <button class="function_button help" @click="addMessages(commandsBot, 'bot') ">/help</button>
-      <button class="function_button meme">/meme</button>
-    </main>
-
-    <footer class="footer-content">
-      <div class="Enter-Window">
-        <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+      <footer class="footer-content">
+        <div class="Enter-Window">
+          <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyEnter="addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
-
-    </footer>
-
-	</div>
-
+      </footer>
+    </div>
+  </div>
 </template>
 
 <script>
+import {chatController} from "./components/ChatController.js";
+import {mathActions} from "./components/MathActions.js";
 
+const hiRegExp = new RegExp(/привет/gi);
+const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
+const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
+let valueHello = 0;
 export default {
-  name: "bot",
-  data(){
+  name: "app",
+  data() {
     return {
+      visible: true,
+      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot:'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      helloMessage: ["Привет", "Привет\n", "hello", "привет", "привет\n", "hello\n", "привет, бот\n", "привет, бот","Hi","Hi\n"]
+      memesBot: [
+        '/memes/onemem.jpg',
+        '/memes/twomem.jpg',
+        '/memes/four.png',
+        '/memes/15.jpg',
+        '/memes/16.jpg',
+        '/memes/вазкрэш.jpg',
+        '/memes/гачи.jpg',
+        '/memes/история.jpg',
+        '/memes/кашель.jpg',
+        '/memes/охлаждение.jpg',
+        '/memes/польша.jpg',
+        '/memes/сборка.jpg',
+        '/memes/СонькаПродаван.jpg',
+        '/memes/типичныеотношения.jpg',
+        '/memes/АШ.jpg',
+        '/memes/витек.jpg',
+        '/memes/мышка.jpg',
+        '/memes/поезд.jpg',
+        '/memes/икота.jpg',
+        '/memes/романтик.jpg',
+      ],
     };
   },
   methods: {
@@ -58,15 +86,54 @@ export default {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
-      if (this.helloMessage.indexOf(message) !== -1) {
-        this.addMessages(this.blockBot, 'bot');
+      if (type === 'help') {
+        this.addMessages(commandsBot, 'bot');
+      }
+      if (hiRegExp.test(message) && type === 'human') {
+        if (valueHello<1) {
+          valueHello +=1;
+          this.addMessages(blockBot, 'bot');
+        }
+      }
+      if (type === 'human') {
+        let splitMessage = message.split(' ');
+        console.log(splitMessage);
+        this.MathCalculate(splitMessage);
+      }
+      if (type !== 'bot-image') {
+        this.clearMessageArea();
       }
     },
     clearMessageArea() {
       this.userMessage = null;
     },
+    getRandomImage(){
+     return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+    },
+    MathCalculate(splitMessage) {
+      let result = null;
+      const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
+      if (!!currActionObj) {
+        const methodParams = splitMessage.filter(currActionObj.conditionFunc);
+        result = mathActions[currActionObj.actionMethod](methodParams);
+      }
+      this.addMessages(result, "bot");
+      return result
+    },
+    getObjByTargetWord(wordArr, targetArr) {
+      const length = targetArr.length;
+      let i = 0;
+      for (i; i < length; i++) {
+        const crossArr = targetArr[i].arrayMatchWords.filter(i => wordArr.includes(i));
+        if (crossArr.length) {
+          return targetArr[i];
+        }
+      }
+      return null;
+    },
   },
   computed: {},
+
   mounted() {
   },
 };
@@ -74,7 +141,17 @@ export default {
 
 <style lang="scss">
 html {
-  font-family: system-ui,serif;
+  font-family: system-ui, serif;
+}
+
+.buttonOpen {
+  background: url("../one.png");
+  background-size: contain;
+  margin: 8px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: black solid 2px;
 }
 
 .chat-bot {
@@ -112,7 +189,7 @@ html {
 }
 
 .main-content {
-  background: no-repeat url(../back.png);
+  background: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
 
@@ -137,33 +214,48 @@ html {
       margin-bottom: 8px;
       vertical-align: center;
       text-align: center;
-      right:0;
+      right: 0;
+    }
 
-      }
-      .message-human{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
-        margin-left: 175px;
-        border-radius: 30px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
-      }
-      .message-bot{
-        color: rgba(245, 245, 245, 1);
-        background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
-        border-radius: 30px;
-        margin-top: 3px;
-        margin-left: 15px;
-        padding: 0.5rem 0.75rem;
-        -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-        box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
-      }
+    .message-human {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
+      margin-left: 175px;
+      border-radius: 30px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
+    }
+
+    .message-bot {
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+      border-radius: 30px;
+      margin-top: 3px;
+      margin-left: 15px;
+      padding: 0.5rem 0.75rem;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+    }
+    .message-img-bot{
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+      border-radius: 30px;
+      margin-top: 3px;
+      margin-left: 10px;;
+      /*padding: 0.5rem 0.75rem;*/
+      padding-top: 25px;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      width: 400px;
+      height: 400px;
+      horiz-align: center;
     }
   }
-
+}
 
 .main-content__message-area-message {
   height: auto;
@@ -193,6 +285,7 @@ html {
 .close-bot {
   display: flex;
 }
+
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
@@ -246,12 +339,10 @@ html {
   margin-right: 10px;
 }
 
-.input-style{
-  display: block;
+.input-style {
   text-decoration: none;
   width: 300px;
   height: 35px;
-  resize: none;
   border-radius: 15px;
   outline: none;
   padding-left: 15px;
@@ -305,18 +396,6 @@ html {
   display: flex;
   justify-content: center;
 }
-.input-button{
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  border: 0;
-  margin-top: 24px;
-  outline: none;
-  margin-left: 15px;
-  background: url("../frog.png") no-repeat center;
-  background-size: cover;
-}
 
 .input-button:hover {
   width: 50px;
@@ -355,6 +434,19 @@ html {
   border: aliceblue solid 2px;
 }
 
+.input-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 0;
+  margin-top: 30px;
+  outline: none;
+  margin-left: 15px;
+  background: url("../frog.png") no-repeat center;
+  background-size: cover;
+  cursor: pointer;
+}
+
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -367,6 +459,7 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -10px #000000 inset;
 }
+
 .function_button:active {
   width: 70px;
   background: #ffffff;
@@ -380,33 +473,33 @@ html {
 }
 
 ::-webkit-scrollbar-button {
-  background-repeat:no-repeat;
-  width:6px;
-  height:0;
+  background-repeat: no-repeat;
+  width: 6px;
+  height: 0
 }
 
 ::-webkit-scrollbar-track {
-  background-color:#7c82ca;
-  box-shadow:0 0 3px #7c82ca inset;
+  background-color: #7c82ca;
+  box-shadow: 0 0 3px #7c82ca inset;
 }
 
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #5ec66d;
-  box-shadow:0 1px 1px #7c82ca inset;
-  background-image:url('https://yraaa.ru/_pu/24/59610063.png');
-  background-position:center;
-  background-repeat:no-repeat;
+  box-shadow: 0 1px 1px #7c82ca inset;
+  background-image: url('https://yraaa.ru/_pu/24/59610063.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-::-webkit-resizer{
-  background-repeat:no-repeat;
-  width:7px;
-  height:0;
+::-webkit-resizer {
+  background-repeat: no-repeat;
+  width: 7px;
+  height: 0
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 11px;
 }
 </style>

@@ -1,0 +1,13 @@
+Сортировка - (arr, sortType) =>  {
+    if (!sortTypes[sortType]) return
+    const sortTypes  = {
+        1: (a,b) => a - b
+
+    }
+
+  return arr.sort(sortTypes[sortType])
+}
+Сглаживание
+Фильтрация по любому условию
+Взятие примитивов
+Дедубликация
