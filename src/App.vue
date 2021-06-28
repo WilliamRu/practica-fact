@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     addMessages(message, type) {
-      if (message.trim()) {
+      if (message.trim() ||!!message || message === 0) {
         this.messages.push({message, type});
         this.clearMessageArea();
       }
@@ -99,8 +99,9 @@ export default {
         }
       }
       if (type === 'human') {
-        let splitMessage = message.split(' ');
-        this.MathCalculate(splitMessage);
+        let splitMessage = message.replace(/\n/ig, '').replace(/\s+/g, ' ').split(' ');
+        console.log(splitMessage);
+        this.mathCalculate(splitMessage);
       }
       if (type !== 'bot-image') {
         this.clearMessageArea();
@@ -112,7 +113,7 @@ export default {
     getRandomImage(){
      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     },
-    MathCalculate(splitMessage) {
+    mathCalculate(splitMessage) {
       let result = null;
       const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
       if (!!currActionObj) {
@@ -124,7 +125,8 @@ export default {
     },
     getObjByTargetWord(wordArr, targetArr) {
       const length = targetArr.length;
-      for (let i = 0; i < length; i++) {
+      let i = 0;
+      for (i; i < length; i++) {
         const crossArr = targetArr[i].arrayMatchWords.filter(i => wordArr.includes(i));
         if (crossArr.length) {
           return targetArr[i];
