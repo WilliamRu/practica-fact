@@ -23,7 +23,7 @@
                 {'message-bot message-img-bot': item.type === 'bot-image'}
             ]"
           >
-            <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="150px" height="150px">
+            <img :src="item.message" alt="" v-if="item.type === 'bot-image'" width="380px" height="380px">
             <div class="main-content__message-area-message" v-text="item.message" v-else/>
           </div>
         </div>
@@ -33,7 +33,7 @@
 
       <footer class="footer-content">
         <div class="Enter-Window">
-          <textarea class="input-style" maxlength="200" placeholder="Введите сообщение" v-model="userMessage" @keyup.enter="addMessages(userMessage, 'human')"></textarea>
+          <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
         <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
       </div>
       </footer>
@@ -65,13 +65,29 @@ export default {
         '/memes/four.png',
         '/memes/15.jpg',
         '/memes/16.jpg',
-      ]
+        '/memes/вазкрэш.jpg',
+        '/memes/гачи.jpg',
+        '/memes/история.jpg',
+        '/memes/кашель.jpg',
+        '/memes/охлаждение.jpg',
+        '/memes/польша.jpg',
+        '/memes/сборка.jpg',
+        '/memes/СонькаПродаван.jpg',
+        '/memes/типичныеотношения.jpg',
+        '/memes/АШ.jpg',
+        '/memes/витек.jpg',
+        '/memes/мышка.jpg',
+        '/memes/поезд.jpg',
+        '/memes/икота.jpg',
+        '/memes/романтик.jpg',
+      ],
     };
   },
   methods: {
     addMessages(message, type) {
-      if (!!message) {
+      if (message.trim()) {
         this.messages.push({message, type});
+        this.clearMessageArea();
       }
       if (type === 'help') {
         this.addMessages(commandsBot, 'bot');
@@ -91,7 +107,7 @@ export default {
       }
     },
     clearMessageArea() {
-      this.userMessage = ''
+      this.userMessage = null;
     },
     getRandomImage(){
      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
@@ -120,25 +136,16 @@ export default {
   computed: {},
 
   mounted() {
-    document.querySelector('textarea').addEventListener('input', function (e) {
-      if (e.target.style.height <= 100 || e.target.value.length <= 100) {
-        e.target.style.height = '1px';
-        e.target.style.height = e.target.scrollHeight + 10 + "px";
-      }
-      if (e.target.value.length == 0) {
-        e.target.style.height = '25px';
-      }
-    });
     let blockBot = document.getElementById('chat-bot');
     let buttonOpen = document.getElementById('buttonOpen');
     buttonOpen.style.display='none';
-    if (blockBot.style.display == 'none') {
+    if (blockBot.style.display === 'none') {
       buttonOpen.style.display = 'inline-block';
     }
   },
-}
-
+};
 </script>
+
 <style lang="scss">
 html {
   font-family: system-ui, serif;
@@ -265,6 +272,21 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
+    .message-img-bot{
+      color: rgba(245, 245, 245, 1);
+      background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
+      border-radius: 30px;
+      margin-top: 3px;
+      margin-left: 10px;;
+      /*padding: 0.5rem 0.75rem;*/
+      padding-top: 25px;
+      -webkit-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
+      width: 400px;
+      height: 400px;
+      horiz-align: center;
+    }
   }
 }
 
@@ -352,17 +374,15 @@ html {
 
 .input-style {
   text-decoration: none;
-  resize: none;
-  border-radius: 15px;
   width: 300px;
-  height: 25px;
-  margin-top: 30px;
-  margin-bottom: 15px;
+  height: 35px;
+  border-radius: 15px;
   outline: none;
   padding-left: 15px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-right: 10px;
-  overflow: auto;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
 .input-style::-webkit-input-placeholder {
@@ -415,7 +435,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 24px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
@@ -428,7 +448,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 24px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
@@ -452,7 +472,7 @@ html {
   height: 50px;
   border-radius: 50px;
   border: 0;
-  margin-top: 30px;
+  margin-top: 33px;
   outline: none;
   margin-left: 15px;
   background: url("../frog.png") no-repeat center;
@@ -486,32 +506,30 @@ html {
 }
 
 ::-webkit-scrollbar-button {
-  //background-image:url('');
   background-repeat: no-repeat;
   width: 6px;
-  height: 0px
+  height: 0
 }
 
 ::-webkit-scrollbar-track {
   background-color: #7c82ca;
-  box-shadow: 0px 0px 3px #7c82ca inset;
+  box-shadow: 0 0 3px #7c82ca inset;
 }
 
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #5ec66d;
-  box-shadow: 0px 1px 1px #7c82ca inset;
+  box-shadow: 0 1px 1px #7c82ca inset;
   background-image: url('https://yraaa.ru/_pu/24/59610063.png');
   background-position: center;
   background-repeat: no-repeat;
 }
 
 ::-webkit-resizer {
-  //background-image:url('');
   background-repeat: no-repeat;
   width: 7px;
-  height: 0px
+  height: 0
 }
 
 ::-webkit-scrollbar {
