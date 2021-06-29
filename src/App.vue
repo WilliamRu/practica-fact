@@ -4,6 +4,10 @@
     <transition name="fade">
       <div class="chat-bot" v-show="visible" id="chat-bot">
         <header class="header-content">
+          <button type="button" class="btn-modal"  @click="showModal">
+            Open Modal!
+          </button>
+          <modal v-show="isModalVisible" @close="closeModal"/>
           <span class="close-bot"></span>
           <img class="logo" src="../one.png" alt="Логотип">
           <span class="name-bots">Frog-Bot</span>
@@ -19,7 +23,6 @@
         </header>
         <main class="main-content">
           <div class="main-content__message-area" id="main-content">
-
             <div
                 class="main-content__message-area-item"
                 v-for="(item, index) in messages" :key="index"
@@ -36,7 +39,6 @@
           <button class="function_button help" @click="addMessages('', 'help')">/help</button>
           <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
         </main>
-
         <footer class="footer-content">
           <div class="Enter-Window">
             <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage.trim(), 'human')"></textarea>
@@ -49,6 +51,7 @@
 </template>
 
 <script>
+import Modal from "./components/Modal.vue";
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
 import {memesArray} from "@/components/memesArray";
@@ -59,8 +62,12 @@ const commandsBot = 'Лягушонок может: складывать (+), у
 let messageHello = true;
 export default {
   name: "app",
+  components:{
+    Modal
+  },
   data() {
     return {
+      isModalVisible: false,
       visible: false,
       userMessage: '',
       messages: [],
@@ -88,12 +95,19 @@ export default {
         this.clearMessageArea();
       }
     },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     clearMessageArea() {
       this.userMessage = null;
     },
     getRandomImage(){
       return memesArray[Math.floor(Math.random() * memesArray.length)];
     },
+
     mathCalculate(splitMessage) {
       let result = null;
       const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
@@ -115,8 +129,8 @@ export default {
       }
       return null;
     },
-  },
-  computed: {}
+
+  }
 };
 </script>
 
@@ -124,16 +138,12 @@ export default {
 html {
   font-family: system-ui, serif;
 }
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
-{
-  opacity: 0;
-}
-
+.fade-enter, .fade-leave-to {
+   opacity: 0;
+ }
 .buttonOpen {
   background: url("../one.png");
   background-size: cover;
@@ -146,11 +156,9 @@ html {
   bottom: 0;
   right: 0;
 }
-
 .buttonOpen:hover {
   cursor: pointer;
 }
-
 .buttonClose {
   background: #42b8a1;
   margin: 8px;
@@ -162,11 +170,9 @@ html {
   top: 0;
   right: 0;
 }
-
 .buttonClose:hover {
   cursor: pointer;
 }
-
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -191,6 +197,19 @@ html {
   border-radius: 50%;
   border: aliceblue solid 2px;
   float: left;
+}
+.btn-modal {
+  color: white;
+  background: rgba(128, 0, 255, 0.71);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 10px;
+  margin-left: 240px;
+  font-size: 12pt;
+  position: absolute;
+  top: 50px;
+}
+.btn-modal:hover {
+  cursor:pointer;
 }
 .bio {
   color: #ffffff;
@@ -286,49 +305,6 @@ html {
 }
 .close-bot {
   display: flex;
-}
-.input-style::-webkit-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style::-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:-ms-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus::-webkit-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus::-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus:-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus:-ms-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.Enter-Window {
-  display: flex;
-  justify-content: center;
-}
-.input-button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-top: 15px;
-  margin-right: 10px;
 }
 .input-style {
   text-decoration: none;
