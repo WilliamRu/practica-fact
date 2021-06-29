@@ -69,12 +69,9 @@ export default {
     return {
       isModalVisible: false,
       visible: false,
-      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
   methods: {
