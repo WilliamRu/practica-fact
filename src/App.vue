@@ -4,17 +4,10 @@
     <transition name="fade">
       <div class="chat-bot" v-show="visible" id="chat-bot">
         <header class="header-content">
-          <button
-              type="button"
-              class="btn-modal"
-              @click="showModal"
-          >
+          <button type="button" class="btn-modal"  @click="showModal">
             Open Modal!
           </button>
-          <modal
-              v-show="isModalVisible"
-              @close="closeModal"
-          />
+          <modal v-show="isModalVisible" @close="closeModal"/>
           <span class="close-bot"></span>
           <img class="logo" src="../one.png" alt="Логотип">
           <span class="name-bots">Frog-Bot</span>
@@ -48,7 +41,7 @@
         </main>
         <footer class="footer-content">
           <div class="Enter-Window">
-            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
+            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage.trim(), 'human')"></textarea>
             <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
           </div>
         </footer>
@@ -56,8 +49,8 @@
     </transition>
   </div>
 </template>
-<script>
 
+<script>
 import Modal from "./components/Modal.vue";
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
@@ -81,29 +74,7 @@ export default {
       messages: [],
       botMessage: [],
       commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      memesBot: [
-        '/memes/onemem.jpg',
-        '/memes/twomem.jpg',
-        '/memes/four.png',
-        '/memes/15.jpg',
-        '/memes/16.jpg',
-        '/memes/вазкрэш.jpg',
-        '/memes/гачи.jpg',
-        '/memes/история.jpg',
-        '/memes/кашель.jpg',
-        '/memes/охлаждение.jpg',
-        '/memes/польша.jpg',
-        '/memes/сборка.jpg',
-        '/memes/СонькаПродаван.jpg',
-        '/memes/типичныеотношения.jpg',
-        '/memes/АШ.jpg',
-        '/memes/витек.jpg',
-        '/memes/мышка.jpg',
-        '/memes/поезд.jpg',
-        '/memes/икота.jpg',
-        '/memes/романтик.jpg',
-      ],
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду'
     };
   },
   methods: {
@@ -162,9 +133,7 @@ export default {
       return null;
     },
 
-  },
-
-  computed: {}
+  }
 };
 </script>
 
@@ -175,8 +144,7 @@ html {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to
- {
+.fade-enter, .fade-leave-to {
    opacity: 0;
  }
 .buttonOpen {
@@ -191,11 +159,9 @@ html {
   bottom: 0;
   right: 0;
 }
-
 .buttonOpen:hover {
   cursor: pointer;
 }
-
 .buttonClose {
   background: #42b8a1;
   margin: 8px;
@@ -207,11 +173,9 @@ html {
   top: 0;
   right: 0;
 }
-
 .buttonClose:hover {
   cursor: pointer;
 }
-
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -344,49 +308,6 @@ html {
 }
 .close-bot {
   display: flex;
-}
-.input-style::-webkit-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style::-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:-ms-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus::-webkit-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus::-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus:-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.input-style:focus:-ms-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.Enter-Window {
-  display: flex;
-  justify-content: center;
-}
-.input-button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-top: 15px;
-  margin-right: 10px;
 }
 .input-style {
   text-decoration: none;

@@ -1,31 +1,16 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal"
-           role="dialog"
-           aria-labelledby="modalTitle"
-           aria-describedby="modalDescription"
-      >
-        <header
-            class="modal-header"
-            id="modalTitle"
-        >
+      <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+        <header class="modal-header" id="modalTitle">
           <slot name="header">
-
-            <button
-                type="button"
-                class="btn-close"
-                @click="close"
-                aria-label="Close modal"
-            >
+            <button type="button" class="btn-close" @click="close" aria-label="Close modal">
               x
             </button>
           </slot>
         </header>
-        <section
-            class="modal-body"
-            id="modalDescription"
-        >{{result}}
+        <section class="modal-body" id="modalDescription">
+          {{result}}
           <slot name="body">
           </slot>
         </section>
@@ -46,7 +31,6 @@ export default {
     close() {
       this.$emit('close');
     },
-
   },
   mounted() {
     const myFetch = async (url) => {
@@ -84,23 +68,17 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
-.modal-header{
-  display: flex;
-}
-
 .modal-header {
+  display: flex;
   border-bottom: 1px solid #eeeeee;
   color: #4AAE9B;
   justify-content: space-between;
 }
-
 .modal-body {
   position: relative;
   padding: 20px 10px;
   color: black;
 }
-
 .btn-close {
   border: none;
   font-size: 20px;
