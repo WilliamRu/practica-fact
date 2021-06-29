@@ -9,7 +9,13 @@
           <span class="name-bots">Frog-Bot</span>
           <p class="bio">NO HORNY.</p>
           <p class="bio">only memes! & math</p>
-          <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">{{ visible ? 'x' : '' }}</button>
+          <button v-on:click="visible=!visible" class="buttonClose" id="buttonClose">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 212.982 212.982" style="enable-background:new 0 0 212.982 212.982;" xml:space="preserve">
+            <g id="Close">
+              <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312   c-6.99-6.99-18.322-6.99-25.312,0l-75.937,75.937L30.554,5.242c-6.99-6.99-18.322-6.99-25.312,0c-6.989,6.99-6.989,18.323,0,25.312   l75.937,75.936L5.242,182.427c-6.989,6.99-6.989,18.323,0,25.312c6.99,6.99,18.322,6.99,25.312,0l75.937-75.937l75.937,75.937   c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
+            </g>
+            </svg>
+          </button>
         </header>
         <main class="main-content">
           <div class="main-content__message-area" id="main-content">
@@ -49,13 +55,14 @@ import {memesArray} from "@/components/memesArray";
 import style from "@/components/style.scss"
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
+const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
 export default {
   name: "app",
   data() {
     return {
-      visible: true,
+      visible: false,
       imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
@@ -133,15 +140,7 @@ export default {
       return null;
     },
   },
-  computed: {},
-  mounted() {
-    let blockBot = document.getElementById('chat-bot');
-    let buttonOpen = document.getElementById('buttonOpen');
-    buttonOpen.style.display='none';
-    if (blockBot.style.display === 'none') {
-      buttonOpen.style.display = 'inline-block';
-    }
-  },
+  computed: {}
 };
 </script>
 
@@ -149,12 +148,16 @@ export default {
 html {
   font-family: system-ui, serif;
 }
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
+{
   opacity: 0;
 }
+
 .buttonOpen {
   background: url("../one.png");
   background-size: cover;
@@ -164,27 +167,30 @@ html {
   border-radius: 50%;
   border: black solid 1px;
   position: absolute;
-  bottom:0;
-  right:0;
+  bottom: 0;
+  right: 0;
 }
+
 .buttonOpen:hover {
   cursor: pointer;
 }
+
 .buttonClose {
   background: #42b8a1;
   margin: 8px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: white solid 1px;
+  border: black solid 1px;
   position: absolute;
-  top:0;
-  right:0;
-  color: white;
+  top: 0;
+  right: 0;
 }
+
 .buttonClose:hover {
-  cursor:pointer;
+  cursor: pointer;
 }
+
 .chat-bot {
   /*background-color: #7c82ca;*/
   margin: 0 auto;
@@ -263,7 +269,8 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.4) inset;
     }
-    .message-img-bot{
+
+    .message-img-bot {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
       border-radius: 30px;
