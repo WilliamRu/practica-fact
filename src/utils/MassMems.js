@@ -4,4 +4,4 @@
     '/memes/four.png',
     '/memes/15.jpg',
     '/memes/16.jpg',
-];
+];g
