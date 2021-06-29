@@ -39,7 +39,7 @@
 
         <footer class="footer-content">
           <div class="Enter-Window">
-            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
+            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage.trim(), 'human')"></textarea>
             <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
           </div>
         </footer>
@@ -62,32 +62,9 @@ export default {
   data() {
     return {
       visible: false,
-      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      memesBot: [
-        '/memes/onemem.jpg',
-        '/memes/twomem.jpg',
-        '/memes/four.png',
-        '/memes/15.jpg',
-        '/memes/16.jpg',
-        '/memes/вазкрэш.jpg',
-        '/memes/гачи.jpg',
-        '/memes/история.jpg',
-        '/memes/кашель.jpg',
-        '/memes/охлаждение.jpg',
-        '/memes/польша.jpg',
-        '/memes/сборка.jpg',
-        '/memes/СонькаПродаван.jpg',
-        '/memes/типичныеотношения.jpg',
-        '/memes/АШ.jpg',
-        '/memes/витек.jpg',
-        '/memes/мышка.jpg',
-        '/memes/поезд.jpg',
-        '/memes/икота.jpg',
-        '/memes/романтик.jpg',
-      ],
     };
   },
   methods: {
