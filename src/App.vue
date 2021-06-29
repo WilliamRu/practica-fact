@@ -51,6 +51,8 @@
 <script>
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
+import {memesArray} from "@/components/memesArray";
+import style from "@/components/style.scss"
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const botUndefinedCommands = 'Я не знаю такой команды';
@@ -98,11 +100,9 @@ export default {
       if (type === 'help') {
         this.addMessages(commandsBot, 'bot');
       }
-      if (hiRegExp.test(message) && type === 'human') {
-        if (messageHello === true) {
+      if (hiRegExp.test(message) && type === 'human' && messageHello === true) {
           messageHello = false;
           this.addMessages(blockBot, 'bot');
-        }
       }
       if (type === 'human') {
         let splitMessage = message.replace(/\n/ig, '').replace(/\s+/g, ' ').split(' ');
@@ -116,7 +116,7 @@ export default {
       this.userMessage = null;
     },
     getRandomImage(){
-      return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
+      return memesArray[Math.floor(Math.random() * memesArray.length)];
     },
     mathCalculate(splitMessage) {
       let result = null;
