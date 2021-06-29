@@ -25,22 +25,10 @@
         <section
             class="modal-body"
             id="modalDescription"
-        >
+        >{{result}}
           <slot name="body">
           </slot>
         </section>
-        <footer class="modal-footer">
-          <slot name="footer">
-
-            <button
-                type="button"
-                class="btn-green"
-                @click="close"
-                aria-label="Close modal"
-            >
-            </button>
-          </slot>
-        </footer>
       </div>
     </div>
   </transition>
@@ -49,11 +37,29 @@
 <script>
 export default {
   name: "Modal",
+  data() {
+    return{
+      result: ""
+    }
+  },
   methods:{
     close() {
       this.$emit('close');
     },
-  }
+
+  },
+  mounted() {
+    const myFetch = async (url) => {
+      try {
+        let res = await fetch(url);
+        this.result = await res.json();
+      }
+      catch (e) {
+        throw new Error("Ошибка!");
+      }
+    }
+    myFetch('https://api.github.com')
+  },
 }
 </script>
 
@@ -79,9 +85,7 @@ export default {
   flex-direction: column;
 }
 
-.modal-header,
-.modal-footer {
-  padding: 15px;
+.modal-header{
   display: flex;
 }
 
@@ -91,14 +95,10 @@ export default {
   justify-content: space-between;
 }
 
-.modal-footer {
-  border-top: 1px solid #eeeeee;
-  justify-content: flex-end;
-}
-
 .modal-body {
   position: relative;
   padding: 20px 10px;
+  color: black;
 }
 
 .btn-close {
@@ -107,15 +107,6 @@ export default {
   padding: 20px;
   cursor: pointer;
   font-weight: bold;
-
   background: transparent;
 }
-
-.btn-green {
-  color: white;
-  background: #4AAE9B;
-  border: 1px solid #4AAE9B;
-  border-radius: 2px;
-}
-
 </style>

@@ -58,7 +58,6 @@
 </template>
 <script>
 
-import {memesBot} from "./utils/MassMems.js";
 import Modal from "./components/Modal.vue";
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
@@ -68,10 +67,10 @@ const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
 export default {
-  components:{
-    Modal,
-  },
   name: "app",
+  components:{
+    Modal
+  },
   data() {
     return {
       isModalVisible: false,
@@ -165,19 +164,7 @@ export default {
     },
 
   },
-  mounted() {
-    const myFetch = async (url) => {
-     try {
-         let res = await fetch(url);
-         let result = await res.json();
-       return result;
-     }
-     catch (e) {
-       throw new Error("Ошибка!");
-    }
-   }
-   myFetch('https://api.github.com')
-   },
+
   computed: {}
 };
 </script>
@@ -189,6 +176,10 @@ html {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
+.fade-enter, .fade-leave-to
+ {
+   opacity: 0;
+ }
 .buttonOpen {
   background: url("../one.png");
   background-size: cover;
@@ -249,13 +240,16 @@ html {
 }
 .btn-modal {
   color: white;
-  background: blue;
-  border: 1px solid #4aae9b;
+  background: rgba(128, 0, 255, 0.71);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 10px;
   margin-left: 240px;
   font-size: 12pt;
   position: absolute;
   top: 50px;
+}
+.btn-modal:hover {
+  cursor:pointer;
 }
 .bio {
   color: #ffffff;
