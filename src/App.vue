@@ -142,8 +142,21 @@ export default {
       }
       return null;
     },
-  },
 
+  },
+  mounted() {
+    const myFetch = async (url) => {
+     try {
+         let res = await fetch(url);
+         let result = await res.json();
+       return result;
+     }
+     catch (e) {
+       throw new Error("Ошибка!");
+    }
+   }
+   myFetch('https://api.github.com')
+   },
   computed: {}
 };
 </script>
