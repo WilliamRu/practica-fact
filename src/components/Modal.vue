@@ -42,7 +42,7 @@ export default {
         throw new Error("Ошибка!");
       }
     }
-    myFetch('https://api.github.com')
+    myFetch('https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json')
   },
 }
 </script>
