@@ -4,6 +4,17 @@
     <transition name="fade">
       <div class="chat-bot" v-show="visible" id="chat-bot">
         <header class="header-content">
+          <button
+              type="button"
+              class="btn-modal"
+              @click="showModal"
+          >
+            Open Modal!
+          </button>
+          <modal
+              v-show="isModalVisible"
+              @close="closeModal"
+          />
           <span class="close-bot"></span>
           <img class="logo" src="../one.png" alt="Логотип">
           <span class="name-bots">Frog-Bot</span>
@@ -19,7 +30,6 @@
         </header>
         <main class="main-content">
           <div class="main-content__message-area" id="main-content">
-
             <div
                 class="main-content__message-area-item"
                 v-for="(item, index) in messages" :key="index"
@@ -36,11 +46,9 @@
           <button class="function_button help" @click="addMessages('', 'help')">/help</button>
           <button class="function_button meme" @click="addMessages(getRandomImage(), 'bot-image')">/meme</button>
         </main>
-
         <footer class="footer-content">
           <div class="Enter-Window">
-            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение"
-                      v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
+            <textarea class="input-style" autofocus maxlength="200" placeholder="Введите сообщение" v-model="userMessage" v-on:keyup.13=" addMessages(userMessage, 'human')"></textarea>
             <button class="input-button" type="button" @click="addMessages(userMessage, 'human')"></button>
           </div>
         </footer>
@@ -48,25 +56,32 @@
     </transition>
   </div>
 </template>
-
 <script>
+
+import {memesBot} from "./utils/MassMems.js";
+import Modal from "./components/Modal.vue";
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
-
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
 export default {
+  components:{
+    Modal,
+  },
   name: "app",
   data() {
     return {
+      isModalVisible: false,
       visible: false,
       imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
+      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
+      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
       memesBot: [
         '/memes/onemem.jpg',
         '/memes/twomem.jpg',
@@ -108,19 +123,25 @@ export default {
       }
       if (type === 'human') {
         let splitMessage = message.replace(/\n/ig, '').replace(/\s+/g, ' ').split(' ');
-        console.log(splitMessage);
         this.mathCalculate(splitMessage);
       }
       if (type !== 'bot-image') {
         this.clearMessageArea();
       }
     },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     clearMessageArea() {
       this.userMessage = null;
     },
-    getRandomImage() {
+    getRandomImage(){
       return this.memesBot[Math.floor(Math.random() * this.memesBot.length)];
     },
+
     mathCalculate(splitMessage) {
       let result = null;
       const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
@@ -165,16 +186,9 @@ export default {
 html {
   font-family: system-ui, serif;
 }
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */
-{
-  opacity: 0;
-}
-
 .buttonOpen {
   background: url("../one.png");
   background-size: cover;
@@ -220,13 +234,11 @@ html {
   0 0 40px rgba(0, 0, 0, .1) inset;
   color: white;
 }
-
 .header-content {
   background-color: #7c82ca;
   height: 100px;
   position: relative;
 }
-
 .logo {
   margin: 8px;
   width: 80px;
@@ -235,19 +247,26 @@ html {
   border: aliceblue solid 2px;
   float: left;
 }
-
+.btn-modal {
+  color: white;
+  background: blue;
+  border: 1px solid #4aae9b;
+  border-radius: 10px;
+  margin-left: 240px;
+  font-size: 12pt;
+  position: absolute;
+  top: 50px;
+}
 .bio {
   color: #ffffff;
   font-size: 14px;
   margin-top: -0.1px;
   margin-left: 45px;
 }
-
 .main-content {
   background: no-repeat url("../back.png");
   background-size: 450px 500px;
   height: 500px;
-
   &__message-area {
     display: flex;
     flex: 1 0;
@@ -257,7 +276,6 @@ html {
     width: 100%;
     max-height: 100%;
     height: 100%;
-
     &-item {
       display: flex;
       justify-content: center;
@@ -271,7 +289,6 @@ html {
       text-align: center;
       right: 0;
     }
-
     .message-human {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(0, 194, 10, .7), rgba(0, 181, 9, .7));
@@ -282,7 +299,6 @@ html {
       -moz-box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
       box-shadow: 0 5px 48px 2px rgba(34, 60, 80, 0.2) inset;
     }
-
     .message-bot {
       color: rgba(245, 245, 245, 1);
       background: radial-gradient(circle, rgba(148, 147, 143, .7), rgba(122, 122, 118, .7));
@@ -312,81 +328,66 @@ html {
     }
   }
 }
-
 .main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-word;
 }
-
 .main-content__message-area-message {
   height: auto;
   width: 90%;
   word-break: break-word;
 }
-
 .footer-content {
   background-color: #7c82ca;
   height: auto;
   padding-bottom: 20px;
 }
-
 .name-bots {
   color: #ffffff;
   font-size: 25px;
   font-weight: bold;
   padding-left: 95px;
 }
-
 .close-bot {
   display: flex;
 }
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style::-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-ms-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-webkit-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-ms-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .Enter-Window {
   display: flex;
   justify-content: center;
 }
-
 .input-button {
   width: 50px;
   height: 50px;
@@ -394,7 +395,6 @@ html {
   margin-top: 15px;
   margin-right: 10px;
 }
-
 .input-style {
   text-decoration: none;
   width: 300px;
@@ -407,52 +407,42 @@ html {
   margin-top: 30px;
   margin-bottom: 15px;
 }
-
 .input-style::-webkit-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style::-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-moz-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:-ms-input-placeholder {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-webkit-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus::-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-moz-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .input-style:focus:-ms-input-placeholder {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .Enter-Window {
   display: flex;
   justify-content: center;
 }
-
 .input-button:hover {
   width: 50px;
   height: 50px;
@@ -465,7 +455,6 @@ html {
   background-size: cover;
   box-shadow: 0px -1px 20px -10px #000000 inset;
 }
-
 .input-button:active {
   width: 50px;
   height: 50px;
@@ -478,7 +467,6 @@ html {
   background-size: cover;
   box-shadow: 0px -1px 20px -1px #000000 inset;
 }
-
 .function_button {
   width: 70px;
   background: #ffffff;
@@ -489,7 +477,6 @@ html {
   border-radius: 30px;
   border: aliceblue solid 2px;
 }
-
 .input-button {
   width: 50px;
   height: 50px;
@@ -502,7 +489,6 @@ html {
   background-size: cover;
   cursor: pointer;
 }
-
 .function_button:hover {
   cursor: pointer;
   width: 70px;
@@ -515,7 +501,6 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -10px #000000 inset;
 }
-
 .function_button:active {
   width: 70px;
   background: #ffffff;
@@ -527,18 +512,15 @@ html {
   border: aliceblue solid 2px;
   box-shadow: 0px -1px 20px -5px #000000 inset;
 }
-
 ::-webkit-scrollbar-button {
   background-repeat: no-repeat;
   width: 6px;
   height: 0
 }
-
 ::-webkit-scrollbar-track {
   background-color: #7c82ca;
   box-shadow: 0 0 3px #7c82ca inset;
 }
-
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -548,13 +530,11 @@ html {
   background-position: center;
   background-repeat: no-repeat;
 }
-
 ::-webkit-resizer {
   background-repeat: no-repeat;
   width: 7px;
   height: 0
 }
-
 ::-webkit-scrollbar {
   width: 11px;
 }
