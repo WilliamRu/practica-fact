@@ -52,7 +52,6 @@
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
 import {memesArray} from "@/components/memesArray";
-import style from "@/components/style.scss"
 const hiRegExp = new RegExp(/привет/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const botUndefinedCommands = 'Я не знаю такой команды';
