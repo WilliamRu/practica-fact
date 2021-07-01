@@ -52,6 +52,7 @@
 
 <script>
 import Modal from "./components/Modal.vue";
+// import {dialog} from "./components/dialog.js";
 import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
 import {memesArray} from "@/components/memesArray";
@@ -60,7 +61,6 @@ const blockBot = 'Привет! Я фрог-бот:) Напиши мне ком�
 const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
-let methodFetch="";
 export default {
   name: "app",
   components:{
@@ -70,31 +70,21 @@ export default {
     return {
       isModalVisible: false,
       visible: false,
-      imgMemes: "@/assets/memes/",
       userMessage: '',
       messages: [],
       botMessage: [],
-      commandsBot: 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). ',
-      blockBot: 'Привет! Я фрог-бот:) Напиши мне команду',
-      result:"",
-      url:''
+      fetchResult: ""
     //  https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json
     };
   },
-  methods: {
 
+  methods: {
     addMessages(message, type) {
       if (!!message || message === 0) {
         this.messages.push({message, type});
         this.clearMessageArea();
-        // if(message.indexOf('https') !== -1) {
-        //   this.url=message;
-        //   console.log(this.url);
-        //   console.log(this.result);
-        //   // this.addMessages('Какой метод?', 'bot');
-        //   this.addMessages(this.result, 'bot');
-        // }
       }
+
       if (type === 'help') {
         this.addMessages(commandsBot, 'bot');
       }
@@ -102,7 +92,6 @@ export default {
           messageHello = false;
           this.addMessages(blockBot, 'bot');
       }
-
       if (type === 'human') {
         let splitMessage = message.replace(/\n/ig, '').replace(/\s+/g, ' ').split(' ');
         this.mathCalculate(splitMessage);
@@ -149,18 +138,17 @@ export default {
     },
 
   },
-
   mounted() {
-    // const myFetch = async (url) => {
-    //   try {
-    //     let res = await fetch(url);
-    //     this.result = await res.json();
-    //   }
-    //   catch (e) {
-    //     throw new Error("Ошибка!");
-    //   }
-    // }
-    // myFetch(this.url)
+    const myFetch = async (url) => {
+      try {
+        let res = await fetch(url);
+        this.fetchResult = await res.json();
+      }
+      catch (e) {
+        throw new Error("Ошибка!");
+      }
+    }
+    myFetch('https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json')
   },
 };
 </script>
