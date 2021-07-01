@@ -22,9 +22,16 @@
 <script>
 export default {
   name: "Modal",
+  props: {
+    urlMsg: {
+      type: String,
+      required: false,
+      default: () => '',
+    }
+  },
   data() {
     return{
-      result: ""
+      result: '',
     }
   },
   methods:{
@@ -37,12 +44,19 @@ export default {
       try {
         let res = await fetch(url);
         this.result = await res.json();
+        console.log(this.result)
       }
       catch (e) {
         throw new Error("Ошибка!");
       }
+
     }
-    myFetch('https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json')
+
+    if (!!this.urlMsg) {
+      myFetch(this.urlMsg);
+         } else {
+      this.$emit('no-fetch-url', 'Адрес запроса не был передан')
+    }
   },
 }
 </script>

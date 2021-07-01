@@ -7,7 +7,7 @@
           <button type="button" class="btn-modal"  @click="showModal">
             Open Modal!
           </button>
-          <modal v-show="isModalVisible" @close="closeModal"/>
+          <modal v-show="isModalVisible" :url-msg="urlMessage" @close="closeModal" @no-fetch-url="noFetchUrlHandler"/>
           <span class="close-bot"></span>
           <img class="logo" src="../one.png" alt="Логотип">
           <span class="name-bots">Frog-Bot</span>
@@ -57,10 +57,14 @@ import {chatController} from "./components/ChatController.js";
 import {mathActions} from "./components/MathActions.js";
 import {memesArray} from "@/components/memesArray";
 const hiRegExp = new RegExp(/привет/gi);
+const apiRegExp = new RegExp(/API/gi);
+const urlRegExp = new RegExp(/http/gi);
 const blockBot = 'Привет! Я фрог-бот:) Напиши мне команду';
 const botUndefinedCommands = 'Я не знаю такой команды';
 const commandsBot = 'Лягушонок может: складывать (+), умножать (*), делить (/), вычитать (-). Так же он умеет отправлять мемы. Слова математических действий следует писать в соответствии с правилами русского языка. ';
 let messageHello = true;
+const botApiReactions = 'Введите Api ( url ) адрес нужного сайта';
+
 export default {
   name: "app",
   components:{
@@ -73,8 +77,7 @@ export default {
       userMessage: '',
       messages: [],
       botMessage: [],
-      fetchResult: ""
-    //  https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json
+      urlMessage: '',
     };
   },
 
@@ -92,6 +95,9 @@ export default {
           messageHello = false;
           this.addMessages(blockBot, 'bot');
       }
+      if (type === 'human' && apiRegExp.test(message)) {
+        this.apiReaction(message);
+      }
       if (type === 'human') {
         let splitMessage = message.replace(/\n/ig, '').replace(/\s+/g, ' ').split(' ');
         this.mathCalculate(splitMessage);
@@ -102,6 +108,7 @@ export default {
         this.clearMessageArea();
       }
     },
+
     showModal() {
       this.isModalVisible = true;
     },
@@ -114,10 +121,20 @@ export default {
     getRandomImage(){
       return memesArray[Math.floor(Math.random() * memesArray.length)];
     },
-
+    apiReaction(message){
+      this.addMessages(botApiReactions, 'bot');
+      message='https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json';
+     // console.log(message);
+      if (urlRegExp.test(message)){
+        this.urlMessage = message;
+        //console.log(this.urlMessage)
+      }else{
+alert('d')
+      }
+    },
     mathCalculate(splitMessage) {
       let result = null;
-      const currActionObj = this.getObjByTargetWord(splitMessage, chatController);
+      const currActionObj = this.getObjByTargetMathWord(splitMessage, chatController);
       if (!!currActionObj) {
         const methodParams = splitMessage.filter(currActionObj.conditionFunc);
         result = mathActions[currActionObj.actionMethod](methodParams);
@@ -125,7 +142,7 @@ export default {
       this.addMessages(result, "bot");
       return result
     },
-    getObjByTargetWord(wordArr, targetArr) {
+    getObjByTargetMathWord(wordArr, targetArr) {
       const length = targetArr.length;
       let i = 0;
       for (i; i < length; i++) {
@@ -136,20 +153,9 @@ export default {
       }
       return null;
     },
-
-  },
-  mounted() {
-    const myFetch = async (url) => {
-      try {
-        let res = await fetch(url);
-        this.fetchResult = await res.json();
-      }
-      catch (e) {
-        throw new Error("Ошибка!");
-      }
+    noFetchUrlHandler(value) {
     }
-    myFetch('https://raw.githubusercontent.com/WilliamRu/TestAPI/master/db.json')
-  },
+  }
 };
 </script>
 
