@@ -1,4 +1,6 @@
-const inquiryApi={}
+const inquiryApi={
+
+}
 const inquiryGet={}
 const inquiryPost={}
 
